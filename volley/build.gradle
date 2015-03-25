@@ -5,7 +5,6 @@
 // Any other changes to the build config belong in rules.gradle, which
 // is used by projects that depend on Volley but define their own
 // tools versions across all dependencies to ensure a consistent build.
-
 buildscript {
     repositories {
         mavenCentral()
@@ -14,12 +13,19 @@ buildscript {
         classpath 'com.android.tools.build:gradle:0.14.+'
     }
 }
-
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion 19
     buildToolsVersion = '21.1.0'
+    buildToolsVersion '21.1.2'
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 19
+    }
+    productFlavors {
+    }
 }
-
 apply from: 'rules.gradle'
+
+dependencies {
+}
