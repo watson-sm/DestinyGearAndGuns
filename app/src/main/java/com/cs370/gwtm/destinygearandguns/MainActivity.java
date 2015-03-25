@@ -8,22 +8,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-//import android.content.Intent;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.android.volley.Cache;
-import com.android.volley.Network;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -41,14 +32,6 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         String searchMemberUrl = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/2/Kiladre/";
-
-        // Instantiate the cache
-        //Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); //1MB cap
-
-        // Setup HttpURLConnection as http client
-        //Network network = new BasicNetwork(new HurlStack());
-
-        // Instantiate request queue with cache and network
 
         RequestQueue rq = Volley.newRequestQueue(this);
 
