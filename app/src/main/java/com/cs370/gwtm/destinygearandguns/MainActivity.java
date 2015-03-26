@@ -26,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
     Context context = this;
 
     public final static String EXTRA_MESSAGE = "com.cs370.gwtm.destinygearandguns.MESSAGE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +59,7 @@ public class MainActivity extends ActionBarActivity {
 
         rq.add(jsonObjectRequest);
     }
-/*
-    public void sendMessage(View view) {
-        // Respond to button click
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-    }
-*/
+
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.edit_message);
