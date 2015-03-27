@@ -32,7 +32,12 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String searchMemberUrl = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/2/Kiladre/";
+        //String searchMemberUrl =
+        // "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/2/Kiladre/";
+        String serviceMemberName = "Kiladre";
+        int membershipType = 2;
+        String searchMemberUrl = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/"
+                + membershipType + "/" + serviceMemberName + "/";
 
         RequestQueue rq = Volley.newRequestQueue(this);
 
