@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
 
         /*
          * Working on moving JSON Requests out of main activity/onCreate() and using Volley as a Singleton.
+         * sdfdfs
          */
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, searchMemberUrl, null,
                 new Response.Listener<JSONObject>() {
