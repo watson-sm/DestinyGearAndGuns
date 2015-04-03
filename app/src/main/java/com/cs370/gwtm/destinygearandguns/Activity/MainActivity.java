@@ -1,4 +1,4 @@
-package com.cs370.gwtm.destinygearandguns;
+package com.cs370.gwtm.destinygearandguns.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.cs370.gwtm.destinygearandguns.R;
+import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +43,11 @@ public class MainActivity extends ActionBarActivity {
 
         RequestQueue rq = Volley.newRequestQueue(this);
 
+        RequestQueue testQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+
+        /*
+         * Working on moving JSON Requests out of main activity/onCreate() and using Volley as a Singleton.
+         */
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, searchMemberUrl, null,
                 new Response.Listener<JSONObject>() {
                     @Override
