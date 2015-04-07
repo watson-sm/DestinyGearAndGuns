@@ -5,4 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_display_message">My Message</string>
+    <string name="search">Search</string>
+    <string name="clear">Clear</string>
+    <string name="username">Username</string>
+    <string name="psn">PSN</string>
+    <string name="xbox_live">Xbox Live</string>
 </resources>
