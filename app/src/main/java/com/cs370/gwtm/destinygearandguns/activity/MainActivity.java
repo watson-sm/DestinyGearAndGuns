@@ -34,6 +34,16 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get handle for username
+        View usernameView = findViewById(R.id.username);
+
+        // Find the root view
+        View root = usernameView.getRootView();
+
+        // Set the color for the background the set color for username box
+        root.setBackgroundColor(getResources().getColor(android.R.color.black));
+        usernameView.setBackgroundColor(getResources().getColor(android.R.color.white));
+
         //String searchMemberUrl =
         // "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/2/Kiladre/";
         String serviceMemberName = "Kiladre";
@@ -73,13 +83,13 @@ public class MainActivity extends ActionBarActivity {
         rq.add(jsonObjectRequest);
     }
 
-    public void sendMessage(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    }
+//    public void sendMessage(View view) {
+//        Intent intent = new Intent(this, DisplayMessageActivity.class);
+//        EditText editText = (EditText) findViewById(R.id.edit_message);
+//        String message = editText.getText().toString();
+//        intent.putExtra(EXTRA_MESSAGE, message);
+//        startActivity(intent);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
