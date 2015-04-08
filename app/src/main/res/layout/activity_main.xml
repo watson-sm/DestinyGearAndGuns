@@ -72,10 +72,12 @@
             android:id="@+id/usernameButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="searchUser"
             android:text="@string/search"
             android:textColor="#FFFFFF"
             android:layout_toEndOf="@+id/clear"
             android:layout_below="@id/username"
             android:layout_marginBottom="15dp"/>
+
     </RelativeLayout>
 </RelativeLayout>

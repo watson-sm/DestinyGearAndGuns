@@ -51,14 +51,15 @@ public class MainActivity extends ActionBarActivity {
         String searchMemberUrl = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/"
                 + membershipType + "/" + serviceMemberName + "/";
 
-        RequestQueue rq = Volley.newRequestQueue(this);
+        //RequestQueue rq = Volley.newRequestQueue(this);
 
-        RequestQueue testQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        //RequestQueue testQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
 
         /*
          * Working on moving JSON Requests out of main activity/onCreate() and using Volley as a Singleton.
          * sdfdfs
          */
+        /*
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, searchMemberUrl, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -81,16 +82,20 @@ public class MainActivity extends ActionBarActivity {
                 });
 
         rq.add(jsonObjectRequest);
+        */
     }
 
-//    public void sendMessage(View view) {
-//        Intent intent = new Intent(this, DisplayMessageActivity.class);
-//        EditText editText = (EditText) findViewById(R.id.edit_message);
-//        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
-//        startActivity(intent);
-//    }
-
+    public void searchUser(View view) {
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        //EditText editText = (EditText) findViewById(R.id.edit_message);
+        EditText editText = (EditText) findViewById( R.id.username );
+        String findUser = editText.getText().toString();
+        //String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, findUser);
+        //intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -112,4 +117,5 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+*/
 }
