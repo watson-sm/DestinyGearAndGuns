@@ -10,4 +10,5 @@
     <string name="username">Username</string>
     <string name="psn">PSN</string>
     <string name="xbox_live">Xbox Live</string>
+    <string name="logo" />
 </resources>
