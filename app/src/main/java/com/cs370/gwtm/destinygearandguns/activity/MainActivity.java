@@ -1,33 +1,20 @@
 package com.cs370.gwtm.destinygearandguns.activity;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import android.widget.RadioButton;
 import com.cs370.gwtm.destinygearandguns.R;
-import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
 
-    Context context = this;
+    // Context context = this;
 
-    public final static String EXTRA_MESSAGE = "com.cs370.gwtm.destinygearandguns.MESSAGE";
+    public final static String ACCOUNT_NAME = "com.cs370.gwtm.destinygearandguns.ACCOUNT_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,54 +30,32 @@ public class MainActivity extends ActionBarActivity {
         // Set the color for the background the set color for username box
         root.setBackgroundColor(getResources().getColor(android.R.color.black));
         usernameView.setBackgroundColor(getResources().getColor(android.R.color.white));
-
-        //String searchMemberUrl =
-        // "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/2/Kiladre/";
-        String serviceMemberName = "Kiladre";
-        int membershipType = 2;
-        String searchMemberUrl = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/"
-                + membershipType + "/" + serviceMemberName + "/";
-
-        RequestQueue rq = Volley.newRequestQueue(this);
-
-        RequestQueue testQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
-
-        /*
-         * Working on moving JSON Requests out of main activity/onCreate() and using Volley as a Singleton.
-         * sdfdfs
-         */
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, searchMemberUrl, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray acctInfo = response.getJSONArray("Response");
-                            for(int i = 0; i < acctInfo.length(); i++) {
-                                Log.v("Response", acctInfo.getString(0));
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        rq.add(jsonObjectRequest);
     }
 
-//    public void sendMessage(View view) {
-//        Intent intent = new Intent(this, DisplayMessageActivity.class);
-//        EditText editText = (EditText) findViewById(R.id.edit_message);
-//        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
-//        startActivity(intent);
-//    }
+    public void searchUser(View view) {
+        Intent myIntent = new Intent(this, DisplayMessageActivity.class);
+        //EditText editText = (EditText) findViewById(R.id.edit_message);
 
+        EditText editText = (EditText) findViewById( R.id.username );
+        String findUser = editText.getText().toString();
+
+        // Is the button now checked?
+        boolean PSNRadioChecked = ( (RadioButton) findViewById( R.id.PSN )).isChecked();
+        //boolean XBLRadioChecked = ( (RadioButton) findViewById( R.id.xboxlive )).isChecked();
+        int PSNChecked = 2;
+        int XBLChecked = 1;
+
+        if ( PSNRadioChecked ) {
+            myIntent.putExtra("PSNChecked", PSNChecked);
+        }
+        else {
+            myIntent.putExtra("XBLChecked", XBLChecked);
+        }
+
+        myIntent.putExtra(ACCOUNT_NAME, findUser);
+        startActivity(myIntent);
+    }
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -112,4 +77,5 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+*/
 }
