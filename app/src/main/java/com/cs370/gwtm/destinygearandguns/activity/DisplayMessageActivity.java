@@ -11,12 +11,34 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+
 import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 
-import org.json.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+class AcctJsonEvent {
+    private String iconPath;
+    private int membershipType;
+    private String membershipId;
+    private String displayName;
+
+    private AcctJsonEvent(String iconPath, int membershipType, String membershipId, String displayName) {
+        this.iconPath = iconPath;
+        this.membershipType = membershipType;
+        this.membershipId = membershipId;
+        this.displayName = displayName;
+    }
+    @Override
+    public String toString() {
+        return String.format(" iconPath=%s \n membershipType=%d \n membershipId=%s \n displayName=%s",
+                iconPath, membershipType, membershipId, displayName);
+    }
+}
 
 public class DisplayMessageActivity extends ActionBarActivity {
 
@@ -33,7 +55,7 @@ public class DisplayMessageActivity extends ActionBarActivity {
         String serviceMemberName = intent.getStringExtra(MainActivity.ACCOUNT_NAME);
 
         // membershipType, XBox Live = 1, PSN = 2.
-        int membershipType = 0;
+        int membershipType;
 
         if ( intent.getIntExtra("XBLChecked", 0) == 1 ) {
             membershipType = intent.getIntExtra("XBLChecked", 0);
@@ -47,12 +69,11 @@ public class DisplayMessageActivity extends ActionBarActivity {
         String searchMemberUrl = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/"
                 + membershipType + "/" + serviceMemberName + "/";
 
-
         // Response
 
         // Create the text view
         final TextView textView = new TextView(this);
-        textView.setTextSize(40);
+        textView.setTextSize(24);
         //textView.setText(message); // Print String send from MainActivity ie: userName
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, searchMemberUrl, null,
@@ -60,12 +81,26 @@ public class DisplayMessageActivity extends ActionBarActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray acctInfo = response.getJSONArray("Response");
+                            // response.getJSONArray("Response")
+                            String jsonResponseString = response.getJSONArray("Response").toString();
+                            JsonParser myParser = new JsonParser();
+
+                            // BEWARE "JSONArray" is org.json & "JsonArray" is com.google.gson
+                            JsonArray acctInfo = myParser.parse(jsonResponseString).getAsJsonArray();
+                            //JSONArray acctInfo = myParser.parse(jsonResponseString).getAsJsonArray();
+
+                            Gson myGson = new Gson();
+
+                            AcctJsonEvent acctJsonEvent = myGson.fromJson(acctInfo.get(0), AcctJsonEvent.class);
+
+                            textView.setText(acctJsonEvent.toString());
+                            /*
                             for(int i = 0; i < acctInfo.length(); i++) {
                                 //Log.v("Response", acctInfo.getString(0));
                                 //textView.setText( "Response" + acctInfo.getString(0) );
-                                textView.setText( "Response" + acctInfo.getString(0) );
+                                textView.setText( acctInfo.getString(0) );
                             }
+                            */
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

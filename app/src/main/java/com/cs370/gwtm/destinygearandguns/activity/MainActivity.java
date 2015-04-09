@@ -4,6 +4,7 @@ package com.cs370.gwtm.destinygearandguns.activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -33,11 +34,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void searchUser(View view) {
+        // Make an intent to essentially throw data so DisplayMessageActivity
+        // can catch with it's own intent
         Intent myIntent = new Intent(this, DisplayMessageActivity.class);
-        //EditText editText = (EditText) findViewById(R.id.edit_message);
 
+        // Search account text box
         EditText editText = (EditText) findViewById( R.id.username );
-        String findUser = editText.getText().toString();
+
+        // Store user input from text box
+        String findUser = editText.getText().toString().replace(" ", "");
 
         // Is the button now checked?
         boolean PSNRadioChecked = ( (RadioButton) findViewById( R.id.PSN )).isChecked();
@@ -45,15 +50,32 @@ public class MainActivity extends ActionBarActivity {
         int PSNChecked = 2;
         int XBLChecked = 1;
 
-        if ( PSNRadioChecked ) {
+        // Decide which radio button is selected
+        if ( PSNRadioChecked )
             myIntent.putExtra("PSNChecked", PSNChecked);
-        }
-        else {
+        else
             myIntent.putExtra("XBLChecked", XBLChecked);
-        }
 
         myIntent.putExtra(ACCOUNT_NAME, findUser);
         startActivity(myIntent);
+    }
+
+    public void clearUserSearch(View view) {
+        EditText editText = (EditText) findViewById( R.id.username  );
+        editText.getText().clear();
+    }
+
+    // Override Enter/Carriage Return to call searchUser
+    // As if clicking the actual Search Button
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_ENTER:
+                searchUser(this.findViewById( R.id.username ));
+                return true;
+            default:
+                return super.onKeyUp(keyCode, event);
+        }
     }
 /*
     @Override
