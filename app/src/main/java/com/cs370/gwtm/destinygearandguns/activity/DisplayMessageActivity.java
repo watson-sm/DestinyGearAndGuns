@@ -57,14 +57,10 @@ public class DisplayMessageActivity extends ActionBarActivity {
         // membershipType, XBox Live = 1, PSN = 2.
         int membershipType;
 
-        if ( intent.getIntExtra("XBLChecked", 0) == 1 ) {
+        if ( intent.getIntExtra("XBLChecked", 0) == 1 )
             membershipType = intent.getIntExtra("XBLChecked", 0);
-            //Log.v("xbl checked", Integer.toString(membershipType));
-        }
-        else {
+        else
             membershipType = intent.getIntExtra("PSNChecked", 0);
-            //Log.v("psn checked", Integer.toString(membershipType));
-        }
 
         String searchMemberUrl = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/"
                 + membershipType + "/" + serviceMemberName + "/";
