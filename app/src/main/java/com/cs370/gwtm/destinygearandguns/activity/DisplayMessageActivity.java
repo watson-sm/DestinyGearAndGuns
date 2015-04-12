@@ -3,6 +3,7 @@ package com.cs370.gwtm.destinygearandguns.activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
 import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 
 import com.google.gson.Gson;
@@ -21,24 +23,6 @@ import com.google.gson.JsonParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-class AcctJsonEvent {
-    private String iconPath;
-    private int membershipType;
-    private String membershipId;
-    private String displayName;
-
-    private AcctJsonEvent(String iconPath, int membershipType, String membershipId, String displayName) {
-        this.iconPath = iconPath;
-        this.membershipType = membershipType;
-        this.membershipId = membershipId;
-        this.displayName = displayName;
-    }
-    @Override
-    public String toString() {
-        return String.format(" iconPath=%s \n membershipType=%d \n membershipId=%s \n displayName=%s",
-                iconPath, membershipType, membershipId, displayName);
-    }
-}
 
 public class DisplayMessageActivity extends ActionBarActivity {
 
@@ -79,24 +63,26 @@ public class DisplayMessageActivity extends ActionBarActivity {
                         try {
                             // response.getJSONArray("Response")
                             String jsonResponseString = response.getJSONArray("Response").toString();
+                            String emptyArray = "[]";
+                            DestinyMembership destinyMembership = new DestinyMembership("", 0, "", "");
+
+                            Log.v("jsonResponseString", jsonResponseString);
+
                             JsonParser myParser = new JsonParser();
 
                             // BEWARE "JSONArray" is org.json & "JsonArray" is com.google.gson
-                            JsonArray acctInfo = myParser.parse(jsonResponseString).getAsJsonArray();
-                            //JSONArray acctInfo = myParser.parse(jsonResponseString).getAsJsonArray();
+                            JsonArray jsonArray = myParser.parse(jsonResponseString).getAsJsonArray();
 
                             Gson myGson = new Gson();
 
-                            AcctJsonEvent acctJsonEvent = myGson.fromJson(acctInfo.get(0), AcctJsonEvent.class);
-
-                            textView.setText(acctJsonEvent.toString());
-                            /*
-                            for(int i = 0; i < acctInfo.length(); i++) {
-                                //Log.v("Response", acctInfo.getString(0));
-                                //textView.setText( "Response" + acctInfo.getString(0) );
-                                textView.setText( acctInfo.getString(0) );
+                            // Detect if the array returned empty.
+                            if( !jsonResponseString.equals(emptyArray) ) {
+                                Log.v("In IF Conditional", "");
+                                destinyMembership = myGson.fromJson(jsonArray.get(0), DestinyMembership.class);
                             }
-                            */
+
+                            textView.setText(destinyMembership.toString());
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
