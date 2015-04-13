@@ -1,9 +1,12 @@
 package com.cs370.gwtm.destinygearandguns.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +41,22 @@ public class DisplayMessageActivity extends ActionBarActivity {
         setContentView(R.layout.activity_display_message);
 
         RequestQueue myQueue = VolleySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+
+/*      Handle when user clicks on a character
+
+
+        TextView username = (TextView) findViewById(R.id.character);
+        username.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                ProgressDialog progressBar = ProgressDialog.show(MainActivity.this, "Title", );
+                progressBar.setCancelable(true);
+                Intent i = new Intent(getApplicationContext(), Register.class);
+                startActivity(i);
+                return false;
+            }
+        }); */
 
         // Get the message from intent
         Intent intent = getIntent();

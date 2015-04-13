@@ -29,6 +29,17 @@ public class Characters {
         characters.add(new Characters("700", "9"));
         characters.add(new Characters("900", "15"));
         characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
+        characters.add(new Characters("400", "13"));
         return characters;
     }
 

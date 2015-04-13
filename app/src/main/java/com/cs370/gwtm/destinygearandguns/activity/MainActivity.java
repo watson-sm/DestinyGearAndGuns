@@ -8,6 +8,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
+
 import com.cs370.gwtm.destinygearandguns.R;
 
 
@@ -31,6 +33,7 @@ public class MainActivity extends ActionBarActivity {
         // Set the color for the background the set color for username box
         root.setBackgroundColor(getResources().getColor(android.R.color.black));
         usernameView.setBackgroundColor(getResources().getColor(android.R.color.white));
+
     }
 
     public void searchUser(View view) {

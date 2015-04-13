@@ -7,13 +7,14 @@
     android:paddingTop="2dp">
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="310dp"
         android:layout_height="30dp"
         android:id="@+id/character"
         android:background="#ff000000"
         android:textColor="#ffffff"
         android:gravity="center"
         android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_marginBottom="2dp" />
 
@@ -39,5 +40,17 @@
         android:textColor="#ffffff"
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="2dp" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        android:layout_toEndOf="@id/character"
+        android:src="@drawable/forward"
+        android:layout_above="@id/hours"
+        android:layout_alignParentEnd="true"
+        android:gravity="end"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"/>
 
 </RelativeLayout>
