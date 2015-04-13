@@ -1,5 +1,7 @@
 package com.cs370.gwtm.destinygearandguns.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by Kiladre on 4/11/15.
  */
