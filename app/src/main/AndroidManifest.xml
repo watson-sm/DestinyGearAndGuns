@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DisplayMessageActivity"
+            android:name=".activity.DisplayCharactersActivity"
             android:label="@string/title_activity_display_message"
             android:parentActivityName=".activity.MainActivity" >
             <meta-data
