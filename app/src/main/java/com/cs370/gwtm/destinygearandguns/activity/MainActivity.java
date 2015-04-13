@@ -9,11 +9,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import com.cs370.gwtm.destinygearandguns.R;
+import com.cs370.gwtm.destinygearandguns.controller.PlayerCharacters;
 
 
 public class MainActivity extends ActionBarActivity {
-
-    // Context context = this;
 
     public final static String ACCOUNT_NAME = "com.cs370.gwtm.destinygearandguns.ACCOUNT_NAME";
 
@@ -34,9 +33,10 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void searchUser(View view) {
-        // Make an intent to essentially throw data so DisplayMessageActivity
+        // Make an intent to essentially throw data so DisplayCharactersActivity
         // can catch with it's own intent
-        Intent myIntent = new Intent(this, DisplayMessageActivity.class);
+        //Intent myIntent = new Intent(this, DisplayCharactersActivity.class);
+        Intent myIntent = new Intent(this, DisplayCharactersActivity.class);
 
         // Search account text box
         EditText editText = (EditText) findViewById( R.id.username );
@@ -45,8 +45,9 @@ public class MainActivity extends ActionBarActivity {
         String findUser = editText.getText().toString().replace(" ", "");
 
         // Is the button now checked?
-        boolean PSNRadioChecked = ( (RadioButton) findViewById( R.id.PSN )).isChecked();
         //boolean XBLRadioChecked = ( (RadioButton) findViewById( R.id.xboxlive )).isChecked();
+        boolean PSNRadioChecked = ( (RadioButton) findViewById( R.id.PSN )).isChecked();
+
         int PSNChecked = 2;
         int XBLChecked = 1;
 
