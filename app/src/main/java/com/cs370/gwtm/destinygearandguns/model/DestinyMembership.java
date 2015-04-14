@@ -17,13 +17,14 @@ public class DestinyMembership {
         membershipId = "";
         displayName = "";
     }
-
+/*
     public DestinyMembership(String iconPath, int membershipType, String membershipId, String displayName) {
         this.iconPath = iconPath;
         this.membershipType = membershipType;
         this.membershipId = membershipId;
         this.displayName = displayName;
     }
+*/
     @Override
     public String toString() {
         return String.format(" iconPath=%s \n membershipType=%d \n membershipId=%s \n displayName=%s",

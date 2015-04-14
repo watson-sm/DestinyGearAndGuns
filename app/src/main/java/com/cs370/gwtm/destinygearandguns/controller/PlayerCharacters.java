@@ -2,7 +2,6 @@ package com.cs370.gwtm.destinygearandguns.controller;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,9 +26,9 @@ import org.json.JSONObject;
 public class PlayerCharacters extends DisplayCharactersActivity {
 
     private Context ctx;
-    private DestinyMembership destinyMembership = new DestinyMembership();
+    //private DestinyMembership destinyMembership = new DestinyMembership();
     private IPlayerCharacterListener iPCL;
-    private PlayerCharacters pc;
+    //private PlayerCharacters pc;
 
     public PlayerCharacters(IPlayerCharacterListener playerCharacterListener) {
         iPCL = playerCharacterListener;
@@ -70,7 +69,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                             if( !jsonResponseString.equals(emptyArray) )
                                 destinyMembership = myGson.fromJson(jsonArray.get(0), DestinyMembership.class);
 
-                            setDestinyMembership(destinyMembership);
+                            //setDestinyMembership(destinyMembership);
                             iPCL.playerCharacterCallback(destinyMembership);
 
                         } catch (JSONException e) {
@@ -89,7 +88,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
         // Add JSON Object Request to Volley Queue
         myQueue.add(jsonDestinyMembership);
     }
-
+/*
     private void setDestinyMembership(DestinyMembership dm) {
         destinyMembership = dm;
         //Log.v("set destinyMembership: ", destinyMembership.toString() );
@@ -99,4 +98,5 @@ public class PlayerCharacters extends DisplayCharactersActivity {
         //Log.v("get destinyMembership", destinyMembership.toString() );
         return destinyMembership;
     }
+*/
 }
