@@ -81,7 +81,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
                         Log.v("Error", error.toString() );
                     }
                 }); // End JSON Object Request
