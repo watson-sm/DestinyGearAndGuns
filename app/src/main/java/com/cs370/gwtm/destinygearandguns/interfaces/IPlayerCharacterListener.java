@@ -1,5 +1,6 @@
 package com.cs370.gwtm.destinygearandguns.interfaces;
 
+import com.cs370.gwtm.destinygearandguns.model.DestinyCharacters;
 import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
 
 /**
@@ -7,5 +8,6 @@ import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
  * Listener
  */
 public interface IPlayerCharacterListener {
-    public void playerCharacterCallback(DestinyMembership dm);
+    public void playerMembershipCallback(DestinyMembership dm);
+    public void playerCharacterCallback(DestinyCharacters[] dc);
 }
