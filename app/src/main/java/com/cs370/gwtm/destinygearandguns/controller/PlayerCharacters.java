@@ -111,9 +111,9 @@ public class PlayerCharacters extends DisplayCharactersActivity {
 
                             String emptyArray = "[]";
                             DestinyCharacters[] destinyCharacters = new DestinyCharacters[3];
-                            destinyCharacters[0] = new DestinyCharacters();
-                            destinyCharacters[1] = new DestinyCharacters();
-                            destinyCharacters[2] = new DestinyCharacters();
+                            destinyCharacters[0] = new DestinyCharacters("");
+                            destinyCharacters[1] = new DestinyCharacters("");
+                            destinyCharacters[2] = new DestinyCharacters("");
 
                             JsonParser myParser = new JsonParser();
 

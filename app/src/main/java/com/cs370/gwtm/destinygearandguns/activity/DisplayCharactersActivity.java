@@ -4,12 +4,17 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cs370.gwtm.destinygearandguns.R;
 import com.cs370.gwtm.destinygearandguns.controller.PlayerCharacters;
+import com.cs370.gwtm.destinygearandguns.interfaces.CharacterArrayAdapter;
 import com.cs370.gwtm.destinygearandguns.interfaces.IPlayerCharacterListener;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacters;
 import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
+
+import java.util.ArrayList;
 
 public class DisplayCharactersActivity extends ActionBarActivity implements IPlayerCharacterListener {
 
@@ -26,9 +31,16 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
     @Override
     public void playerCharacterCallback(DestinyCharacters[] dc) {
+        ArrayList<DestinyCharacters> Ids = new ArrayList<DestinyCharacters>();
+        setContentView(R.layout.activity_display_message);
+
         for(int i = 0; i < 3; i++) {
             Log.v("Character: ", dc[i].toString());
-            textView.setText(dc[i].toString());
+            //textView.setText(dc[i].toString());
+            Ids.add(new DestinyCharacters(dc[i].toString()));
+            CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, Ids);
+            ListView listView = (ListView) findViewById(R.id.characterList);
+            listView.setAdapter(adapter);
         }
         //textView.setText( dc.toString() );
     }
