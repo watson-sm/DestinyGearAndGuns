@@ -30,6 +30,26 @@ public class DestinyMembership {
         return displayName;
     }
 
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    public void setIconPath(String path) {
+        iconPath = path;
+    }
+
+    public void setMembershipType(int type) {
+        membershipType = type;
+    }
+
+    public void setMembershipId(String id) {
+        membershipId = id;
+    }
+
+    public void setDisplayName(String acctName) {
+        displayName = acctName;
+    }
+
     @Override
     public String toString() {
         return String.format(" iconPath=%s \n membershipType=%d \n membershipId=%s \n displayName=%s",

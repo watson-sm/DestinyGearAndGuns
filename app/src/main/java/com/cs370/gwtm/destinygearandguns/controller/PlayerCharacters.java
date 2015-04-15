@@ -96,7 +96,6 @@ public class PlayerCharacters extends DisplayCharactersActivity {
         // Membership Type: Xbox Live = 1, PSN = 2
 
         // Search characters url
-        // Ex: https://www.bungie.net/Platform/Destiny/Stats/Account/2/4611686018428756196/
         String searchCharactersUrl = "https://www.bungie.net/Platform/Destiny/Stats/Account/"
                 + membershipType + "/" + characterId + "/";
 
@@ -125,8 +124,6 @@ public class PlayerCharacters extends DisplayCharactersActivity {
 
                             // Detect if the array returned empty.
                             if( !jsonResponseString.equals(emptyArray) ) {
-
-                                // TODO this goes out of bounds if player has < 3 characters.
                                 for( int i = 0; i < jsonArray.size(); i++)
                                     destinyCharacters[i] = myGson.fromJson(jsonArray.get(i), DestinyCharacters.class);
                             }
