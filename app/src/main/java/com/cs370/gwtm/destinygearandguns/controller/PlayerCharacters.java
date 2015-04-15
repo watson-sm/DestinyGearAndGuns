@@ -2,7 +2,6 @@ package com.cs370.gwtm.destinygearandguns.controller;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -11,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.cs370.gwtm.destinygearandguns.activity.DisplayCharactersActivity;
 import com.cs370.gwtm.destinygearandguns.interfaces.IPlayerCharacterListener;
+import com.cs370.gwtm.destinygearandguns.model.DestinyCharacters;
 import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
 import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 import com.google.gson.Gson;
@@ -27,21 +27,19 @@ import org.json.JSONObject;
 public class PlayerCharacters extends DisplayCharactersActivity {
 
     private Context ctx;
-    private DestinyMembership destinyMembership = new DestinyMembership();
     private IPlayerCharacterListener iPCL;
-    private PlayerCharacters pc;
 
     public PlayerCharacters(IPlayerCharacterListener playerCharacterListener) {
         iPCL = playerCharacterListener;
         ctx = (Context) playerCharacterListener;
     }
-    public void getCharacters(int XBLChecked, String serviceMemberName) {
+    public void pullMembership(int serviceChecked, String serviceMemberName) {
         RequestQueue myQueue = VolleySingleton.getInstance( ctx.getApplicationContext() ).getRequestQueue();
 
         // Membership Type: Xbox Live = 1, PSN = 2
         int membershipType;
 
-        if ( XBLChecked == 1)
+        if ( serviceChecked == 1)
             membershipType = 1;
         else
             membershipType = 2;
@@ -49,6 +47,9 @@ public class PlayerCharacters extends DisplayCharactersActivity {
         String searchMemberUrl = "https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/"
                 + membershipType + "/" + serviceMemberName + "/";
 
+        /*
+         * Destiny Membership info request
+         */
         JsonObjectRequest jsonDestinyMembership = new JsonObjectRequest(Request.Method.GET, searchMemberUrl, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -70,8 +71,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                             if( !jsonResponseString.equals(emptyArray) )
                                 destinyMembership = myGson.fromJson(jsonArray.get(0), DestinyMembership.class);
 
-                            setDestinyMembership(destinyMembership);
-                            iPCL.playerCharacterCallback(destinyMembership);
+                            iPCL.playerMembershipCallback(destinyMembership);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -81,7 +81,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ctx.getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
                         Log.v("Error", error.toString() );
                     }
                 }); // End JSON Object Request
@@ -90,13 +90,63 @@ public class PlayerCharacters extends DisplayCharactersActivity {
         myQueue.add(jsonDestinyMembership);
     }
 
-    private void setDestinyMembership(DestinyMembership dm) {
-        destinyMembership = dm;
-        //Log.v("set destinyMembership: ", destinyMembership.toString() );
-    }
+    public void pullCharacters(int membershipType, String characterId) {
+        RequestQueue myQueue = VolleySingleton.getInstance( ctx.getApplicationContext() ).getRequestQueue();
 
-    public DestinyMembership getDestinyMembership() {
-        //Log.v("get destinyMembership", destinyMembership.toString() );
-        return destinyMembership;
+        // Membership Type: Xbox Live = 1, PSN = 2
+
+        // Search characters url
+        // Ex: https://www.bungie.net/Platform/Destiny/Stats/Account/2/4611686018428756196/
+        String searchCharactersUrl = "https://www.bungie.net/Platform/Destiny/Stats/Account/"
+                + membershipType + "/" + characterId + "/";
+
+    /*
+     * Destiny Character info request
+     */
+        JsonObjectRequest jsonDestinyCharacters = new JsonObjectRequest(Request.Method.GET, searchCharactersUrl, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String jsonResponseString = response.getJSONObject("Response").getJSONArray("characters").toString();
+
+                            String emptyArray = "[]";
+                            DestinyCharacters[] destinyCharacters = new DestinyCharacters[3];
+                            destinyCharacters[0] = new DestinyCharacters();
+                            destinyCharacters[1] = new DestinyCharacters();
+                            destinyCharacters[2] = new DestinyCharacters();
+
+                            JsonParser myParser = new JsonParser();
+
+                            // BEWARE "JSONArray" is org.json & "JsonArray" is com.google.gson
+                            JsonArray jsonArray = myParser.parse(jsonResponseString).getAsJsonArray();
+
+                            Gson myGson = new Gson();
+
+                            // Detect if the array returned empty.
+                            if( !jsonResponseString.equals(emptyArray) ) {
+
+                                // TODO this goes out of bounds if player has < 3 characters.
+                                for( int i = 0; i < jsonArray.size(); i++)
+                                    destinyCharacters[i] = myGson.fromJson(jsonArray.get(i), DestinyCharacters.class);
+                            }
+
+                            iPCL.playerCharacterCallback(destinyCharacters);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(ctx.getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        Log.v("Error", error.toString() );
+                    }
+                }); // End JSON Object Request
+
+        // Add JSON Object Request to Volley Queue
+        myQueue.add(jsonDestinyCharacters);
     }
 }

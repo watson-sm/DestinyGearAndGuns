@@ -2,6 +2,7 @@ package com.cs370.gwtm.destinygearandguns.activity;
 
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import com.cs370.gwtm.destinygearandguns.R;
-import com.cs370.gwtm.destinygearandguns.controller.PlayerCharacters;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -69,7 +69,7 @@ public class MainActivity extends ActionBarActivity {
     // Override Enter/Carriage Return to call searchUser
     // As if clicking the actual Search Button
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_ENTER:
                 searchUser(this.findViewById( R.id.username ));
