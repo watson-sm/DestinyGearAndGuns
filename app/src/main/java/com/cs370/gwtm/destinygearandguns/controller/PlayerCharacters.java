@@ -127,7 +127,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                             if( !jsonResponseString.equals(emptyArray) ) {
 
                                 // TODO this goes out of bounds if player has < 3 characters.
-                                for( int i = 0; i < 3; i++)
+                                for( int i = 0; i < jsonArray.size(); i++)
                                     destinyCharacters[i] = myGson.fromJson(jsonArray.get(i), DestinyCharacters.class);
                             }
 
