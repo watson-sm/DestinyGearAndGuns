@@ -11,6 +11,7 @@ import com.cs370.gwtm.destinygearandguns.R;
 import com.cs370.gwtm.destinygearandguns.controller.PlayerCharacters;
 import com.cs370.gwtm.destinygearandguns.interfaces.CharacterArrayAdapter;
 import com.cs370.gwtm.destinygearandguns.interfaces.IPlayerCharacterListener;
+import com.cs370.gwtm.destinygearandguns.model.DestinyCharacterInfo;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacters;
 import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
 
@@ -20,6 +21,7 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
     private TextView textView;
     private PlayerCharacters pc;
+    private String bungieURL = "https://www.bungie.net";
 
     @Override
     public void playerMembershipCallback(DestinyMembership dm) {
@@ -31,18 +33,30 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
     @Override
     public void playerCharacterCallback(DestinyCharacters[] dc) {
-        ArrayList<DestinyCharacters> Ids = new ArrayList<DestinyCharacters>();
+        ArrayList<DestinyCharacters> Ids = new ArrayList<>();
         setContentView(R.layout.activity_display_message);
 
+        // Player's can have up to 3 characters.
         for(int i = 0; i < 3; i++) {
-            Log.v("Character: ", dc[i].toString());
-            //textView.setText(dc[i].toString());
+            pc.pullCharacterInfo(dc[i].getMembershipType(), dc[i].getMembershipId(), dc[i].getCharacterId());
+            //Log.v("Character: ", dc[i].toString());
             Ids.add(new DestinyCharacters(dc[i].toString()));
             CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, Ids);
             ListView listView = (ListView) findViewById(R.id.characterList);
             listView.setAdapter(adapter);
         }
-        //textView.setText( dc.toString() );
+    }
+
+    @Override
+    public void playerCharacterInfoCallback(DestinyCharacterInfo dcInfo) {
+        // TODO figure out how to use emblem and background path to load images from url
+        // and put in character level
+        Log.v("emblem path: ", dcInfo.getEmblemPath() );
+        Log.v("background path: ", dcInfo.getBackgroundPath() );
+        Log.v("character level: ", String.valueOf( dcInfo.getCharacterLevel() ) );
+
+        // TODO race hash isn't currently working. Has to do with nested JSON objects
+        Log.v("race hash: ", String.valueOf( dcInfo.getRaceHash() ) );
     }
 
     @Override
@@ -64,11 +78,7 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         int serviceChecked = intent.getIntExtra("XBLChecked", 0);
 
         pc.pullMembership(serviceChecked, serviceMemberName);
-
-        setContentView(textView);
     }
-
-
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
