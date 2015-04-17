@@ -10,11 +10,13 @@ public class DestinyCharacters {
     private String characterId;
     private int membershipType;
     private String membershipId;
+    private String level;
     //private boolean deleted;
     private ArrayList<DestinyCharacters> destinyCharacters;
 
     public DestinyCharacters(String characterId) {
         this.characterId = characterId;
+        //this.level = level;
         //deleted = false;
     }
 
@@ -41,6 +43,10 @@ public class DestinyCharacters {
     public String getCharacterId() {
         return characterId;
     }
+
+//    public String getLevel() { return level; }
+
+//    public void setLevel(String level) { this.level = level; }
 
     // public void setDeleted(boolean deleted) { this.deleted = deleted; }
 

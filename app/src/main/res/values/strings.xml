@@ -10,4 +10,8 @@
     <string name="psn">PSN</string>
     <string name="xbox_live">Xbox Live</string>
     <string name="logo" />
+    <string name="title_activity_dispaly_characters_inventory">DispalyCharactersInventory</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_display_inventory">DisplayInventoryActivity</string>
 </resources>

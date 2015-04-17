@@ -194,15 +194,15 @@ public class PlayerCharacters extends DisplayCharactersActivity {
 
                             //String emptyArray = "[]";
 
-                            //String jsonConCat = jsonCharacterBase + jsonCharacterLevelInfo +jsonCharacterData;
+                            String jsonConCat = jsonCharacterBase + "," + jsonCharacterLevelInfo.substring(1); // +jsonCharacterData;
+
+                            Log.v("JSON: ", jsonConCat);
 
                             JsonParser myParser = new JsonParser();
 
                             Log.v("jCB -> ", jsonCharacterBase);
                             Log.v("jCLI -> ", jsonCharacterLevelInfo);
                             Log.v("jCD -> ", jsonCharacterData);
-
-
 
                             JsonElement tmp = myParser.parse(jsonCharacterData);
 

@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cs370.gwtm.destinygearandguns.R;
 import com.cs370.gwtm.destinygearandguns.controller.PlayerCharacters;
@@ -40,10 +42,12 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         for(int i = 0; i < 3; i++) {
             pc.pullCharacterInfo(dc[i].getMembershipType(), dc[i].getMembershipId(), dc[i].getCharacterId());
             //Log.v("Character: ", dc[i].toString());
-            Ids.add(new DestinyCharacters(dc[i].toString()));
-            CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, Ids);
-            ListView listView = (ListView) findViewById(R.id.characterList);
-            listView.setAdapter(adapter);
+            if(dc[i].toString() != "") {
+                Ids.add(new DestinyCharacters(dc[i].toString()));
+                CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, Ids);
+                ListView listView = (ListView) findViewById(R.id.characterList);
+                listView.setAdapter(adapter);
+            }
         }
     }
 
@@ -51,6 +55,7 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
     public void playerCharacterInfoCallback(DestinyCharacterInfo dcInfo) {
         // TODO figure out how to use emblem and background path to load images from url
         // and put in character level
+        Log.v("character Id: ", dcInfo.getCharacterId() );
         Log.v("emblem path: ", dcInfo.getEmblemPath() );
         Log.v("background path: ", dcInfo.getBackgroundPath() );
         Log.v("character level: ", String.valueOf( dcInfo.getCharacterLevel() ) );
@@ -78,6 +83,12 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         int serviceChecked = intent.getIntExtra("XBLChecked", 0);
 
         pc.pullMembership(serviceChecked, serviceMemberName);
+    }
+
+    public void getInventory(View view) {
+        Intent inventoryIntent = new Intent(this, DisplayInventoryActivity.class);
+
+        startActivity(inventoryIntent);
     }
 /*
     @Override
