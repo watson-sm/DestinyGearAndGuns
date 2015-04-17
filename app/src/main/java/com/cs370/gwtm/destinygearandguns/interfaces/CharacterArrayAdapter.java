@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.cs370.gwtm.destinygearandguns.R;
+import com.cs370.gwtm.destinygearandguns.model.DestinyCharacterInfo;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacters;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class CharacterArrayAdapter extends ArrayAdapter<DestinyCharacters> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+
         // Get the data item for this position
         DestinyCharacters characters = getItem(position);
 
@@ -37,7 +39,7 @@ public class CharacterArrayAdapter extends ArrayAdapter<DestinyCharacters> {
         TextView character = (TextView) convertView.findViewById(R.id.character);
 
         // Populate the data into the template view using the data object
-        level.setText("14");
+        level.setText("13");
         hours.setText("700");
         character.setText(characters.getCharacterId());
 
