@@ -54,13 +54,14 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
     @Override
     public void playerCharacterInfoCallback(DestinyCharacterInfo dcInfo) {
         // TODO figure out how to use emblem and background path to load images from url
-        // and put in character level
+        // and put in character level.
+
+        // Model is loaded...here are example logs see about loading this information into
+        // the view
         Log.v("character Id: ", dcInfo.getCharacterId() );
         Log.v("emblem path: ", dcInfo.getEmblemPath() );
         Log.v("background path: ", dcInfo.getBackgroundPath() );
         Log.v("character level: ", String.valueOf( dcInfo.getCharacterLevel() ) );
-
-        // TODO race hash isn't currently working. Has to do with nested JSON objects
         Log.v("race hash: ", String.valueOf( dcInfo.getRaceHash() ) );
     }
 
