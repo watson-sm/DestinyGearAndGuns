@@ -5,23 +5,44 @@ package com.cs370.gwtm.destinygearandguns.model;
  * For storing information for particular characters
  */
 public class DestinyCharacterInfo {
-    String membershipId = "";
-    int membershipType = 0;
-    String characterId = "";
-    int characterLevel = 0;
-    int baseCharacterLevel = 0;
-    boolean isPrestigeLevel = false;
-    int raceHash = 0;
-    int genderHash = 0;
-    int classHash = 0;
-    int genderType = 0;
-    int classType = 0;
-    double percentToNextLevel = 0.0;
-    String emblemPath = "";
-    String backgroundPath = "";
+    String membershipId;
+    int membershipType;
+    String characterId;
+    int characterLevel;
+    long raceHash;
+    long genderHash;
+    long classHash;
+
+    public long getEmblemHash() {
+        return emblemHash;
+    }
+
+    public void setEmblemHash(long emblemHash) {
+        this.emblemHash = emblemHash;
+    }
+
+    long emblemHash;
+    int genderType;
+    int classType;
+    String emblemPath;
+    String backgroundPath;
 
     public DestinyCharacterInfo() {
+        membershipId = "";
+        membershipType = 0;
+        characterId = "";
+        characterLevel = 0;
+        raceHash = 0;
+        genderHash = 0;
+        classHash = 0;
+        emblemHash = 0;
+        genderType = 0;
+        classType = 0;
+        emblemPath = "";
+        backgroundPath = "";
     }
+
+
 
     public String getMembershipId() {
         return membershipId;
@@ -55,43 +76,27 @@ public class DestinyCharacterInfo {
         this.characterLevel = characterLevel;
     }
 
-    public int getBaseCharacterLevel() {
-        return baseCharacterLevel;
-    }
-
-    public void setBaseCharacterLevel(int baseCharacterLevel) {
-        this.baseCharacterLevel = baseCharacterLevel;
-    }
-
-    public boolean isPrestigeLevel() {
-        return isPrestigeLevel;
-    }
-
-    public void setPrestigeLevel(boolean isPrestigeLevel) {
-        this.isPrestigeLevel = isPrestigeLevel;
-    }
-
-    public int getRaceHash() {
+    public long getRaceHash() {
         return raceHash;
     }
 
-    public void setRaceHash(int raceHash) {
+    public void setRaceHash(long raceHash) {
         this.raceHash = raceHash;
     }
 
-    public int getGenderHash() {
+    public long getGenderHash() {
         return genderHash;
     }
 
-    public void setGenderHash(int genderHash) {
+    public void setGenderHash(long genderHash) {
         this.genderHash = genderHash;
     }
 
-    public int getClassHash() {
+    public long getClassHash() {
         return classHash;
     }
 
-    public void setClassHash(int classHash) {
+    public void setClassHash(long classHash) {
         this.classHash = classHash;
     }
 
@@ -109,14 +114,6 @@ public class DestinyCharacterInfo {
 
     public void setClassType(int classType) {
         this.classType = classType;
-    }
-
-    public double getPercentToNextLevel() {
-        return percentToNextLevel;
-    }
-
-    public void setPercentToNextLevel(double percentToNextLevel) {
-        this.percentToNextLevel = percentToNextLevel;
     }
 
     public String getEmblemPath() {

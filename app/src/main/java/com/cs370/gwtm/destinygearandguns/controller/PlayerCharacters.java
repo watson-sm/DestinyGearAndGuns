@@ -16,7 +16,6 @@ import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
 import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import org.json.JSONException;
@@ -170,58 +169,67 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Gson myGson = new Gson();
-                            DestinyCharacterInfo dcInfo;
+                            DestinyCharacterInfo dcInfo = new DestinyCharacterInfo();
 
                             // This is pulling the character base information
-                            String jsonCharacterBase = response.getJSONObject("Response")
-                                                                .getJSONObject("data")
-                                                                .getJSONObject("characterBase")
-                                                                .toString();
 
                             // This is pulling the leveling information
                             // from destiny character summary
                             // ex file: destiny_character_summary_hr.txt
-                            String jsonCharacterLevelInfo = response.getJSONObject("Response")
-                                    .getJSONObject("data")
-                                    .getJSONObject("levelProgression")
-                                    .toString();
+
 
                             // Essentially pulling everything
                             String jsonCharacterData = response.getJSONObject("Response")
                                     .getJSONObject("data")
                                     .toString();
 
-                            //String emptyArray = "[]";
+                            String membershipId_tag = "\"membershipId\":";
+                            String membershipId_val = parseCharacterInfoString(membershipId_tag, jsonCharacterData);
+                            dcInfo.setMembershipId(membershipId_val);
 
-                            String jsonConCat = jsonCharacterBase + "," + jsonCharacterLevelInfo.substring(1); // +jsonCharacterData;
+                            String membershipType_tag = "\"membershipType\":";
+                            String membershipType_val = parseCharacterInfoNum(membershipType_tag, jsonCharacterData);
+                            dcInfo.setMembershipType( Integer.parseInt(membershipType_val) );
 
-                            Log.v("JSON: ", jsonConCat);
+                            String characterId_tag = "\"characterId\":";
+                            String characterId_val = parseCharacterInfoString(characterId_tag, jsonCharacterData);
+                            dcInfo.setCharacterId(characterId_val);
 
-                            JsonParser myParser = new JsonParser();
+                            String raceHash_tag = "\"raceHash\":";
+                            String raceHash_val = parseCharacterInfoNum(raceHash_tag, jsonCharacterData);
+                            dcInfo.setRaceHash( Long.parseLong( raceHash_val.trim() ) );
 
-                            Log.v("jCB -> ", jsonCharacterBase);
-                            Log.v("jCLI -> ", jsonCharacterLevelInfo);
-                            Log.v("jCD -> ", jsonCharacterData);
+                            String genderHash_tag = "\"genderHash\":";
+                            String genderHash_val = parseCharacterInfoNum(genderHash_tag, jsonCharacterData);
+                            dcInfo.setGenderHash( Long.parseLong(genderHash_val) );
 
-                            JsonElement tmp = myParser.parse(jsonCharacterData);
+                            String classHash_tag = "\"classHash\":";
+                            String classHash_val = parseCharacterInfoNum(classHash_tag, jsonCharacterData);
+                            dcInfo.setClassHash( Long.parseLong(classHash_val) );
 
-                            // BEWARE "JSONArray" is org.json & "JsonArray" is com.google.gson
-                            //JsonElement jsonCB = myParser.parse(jsonCharacterBase);
-                            //JsonElement jsonCLI = myParser.parse(jsonCharacterLevelInfo);
-                            //JsonElement jsonCD = myParser.parse(jsonCharacterData);
-                            //JsonElement jsonElement = myParser.parse(jsonConCat);
+                            String genderType_tag = "\"genderType\":";
+                            String genderType_val = parseCharacterInfoNum(genderType_tag, jsonCharacterData);
+                            dcInfo.setGenderType( Integer.parseInt(genderType_val) );
 
-                            //Log.v("jsonCB: ", jsonCB.toString() );
-                            //Log.v("jsonCLI: ", jsonCLI.toString() );
-                            //Log.v("jsonCD: ", jsonCD.toString() );
-                            //Log.v("tmp-> ", tmp.toString() );
+                            String classType_tag = "\"classType\":";
+                            String classType_val = parseCharacterInfoNum(classType_tag, jsonCharacterData);
+                            dcInfo.setClassType( Integer.parseInt(classType_val) );
 
-                            //dcInfo = myGson.fromJson(jsonCB, DestinyCharacterInfo.class);
-                            //dcInfo = myGson.fromJson(jsonCLI, DestinyCharacterInfo.class);
-                            //dcInfo = myGson.fromJson(jsonCharacterData, DestinyCharacterInfo.class);
-                            //dcInfo = myGson.fromJson(jsonConCat, DestinyCharacterInfo.class);
-                            dcInfo = myGson.fromJson(tmp, DestinyCharacterInfo.class);
+                            String emblemPath_tag = "\"emblemPath\":";
+                            String emblemPath_val = parseCharacterInfoString(emblemPath_tag, jsonCharacterData);
+                            dcInfo.setEmblemPath( emblemPath_val );
+
+                            String backgroundPath_tag = "\"backgroundPath\":";
+                            String backgroundPath_val = parseCharacterInfoString(backgroundPath_tag, jsonCharacterData);
+                            dcInfo.setBackgroundPath( backgroundPath_val );
+
+                            String emblemHash_tag = "\"emblemHash\":";
+                            String emblemHash_val = parseCharacterInfoNum(emblemHash_tag, jsonCharacterData);
+                            dcInfo.setEmblemHash( Long.parseLong(emblemHash_val) );
+
+                            String characterLevel_tag = "\"characterLevel\":";
+                            String characterLevel_val = parseCharacterInfoNum(characterLevel_tag, jsonCharacterData);
+                            dcInfo.setCharacterLevel( Integer.parseInt(characterLevel_val) );
 
                             iPCL.playerCharacterInfoCallback(dcInfo);
 
@@ -240,5 +248,25 @@ public class PlayerCharacters extends DisplayCharactersActivity {
 
         // Add JSON Object Request to Volley Queue
         myQueue.add(jsonDestinyCharacterInfo);
+    }
+
+    String parseCharacterInfoNum(String attribute, String jsonCharacterData) {
+        int tmpFirstIdx = jsonCharacterData.indexOf(attribute);
+
+        // Parse the attribute value
+        return jsonCharacterData.substring(
+                tmpFirstIdx + attribute.length(),
+                jsonCharacterData.indexOf(",", tmpFirstIdx + attribute.length() + 1)
+        );
+    }
+
+    String parseCharacterInfoString(String attribute, String jsonCharacterData) {
+        int tmpFirstIdx = jsonCharacterData.indexOf(attribute);
+
+        // Parse the attribute value
+        return jsonCharacterData.substring(
+                tmpFirstIdx + attribute.length() + 1,
+                jsonCharacterData.indexOf(",", tmpFirstIdx + attribute.length() ) - 1
+        );
     }
 }
