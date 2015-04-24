@@ -7,7 +7,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
+import com.cs370.gwtm.destinygearandguns.R;
 import com.cs370.gwtm.destinygearandguns.activity.DisplayCharactersActivity;
 import com.cs370.gwtm.destinygearandguns.interfaces.IPlayerCharacterListener;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacterInfo;
@@ -29,6 +32,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
 
     private Context ctx;
     private IPlayerCharacterListener iPCL;
+    final String BUNGIE_URL = "https://www.bungie.net";
 
     public PlayerCharacters(IPlayerCharacterListener playerCharacterListener) {
         iPCL = playerCharacterListener;
@@ -170,14 +174,6 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             DestinyCharacterInfo dcInfo = new DestinyCharacterInfo();
-
-                            // This is pulling the character base information
-
-                            // This is pulling the leveling information
-                            // from destiny character summary
-                            // ex file: destiny_character_summary_hr.txt
-
-
                             // Essentially pulling everything
                             String jsonCharacterData = response.getJSONObject("Response")
                                     .getJSONObject("data")
@@ -216,11 +212,11 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                             dcInfo.setClassType( Integer.parseInt(classType_val) );
 
                             String emblemPath_tag = "\"emblemPath\":";
-                            String emblemPath_val = parseCharacterInfoString(emblemPath_tag, jsonCharacterData);
+                            String emblemPath_val = parseCharacterInfoString(emblemPath_tag, jsonCharacterData).replace("\\", "");
                             dcInfo.setEmblemPath( emblemPath_val );
 
                             String backgroundPath_tag = "\"backgroundPath\":";
-                            String backgroundPath_val = parseCharacterInfoString(backgroundPath_tag, jsonCharacterData);
+                            String backgroundPath_val = parseCharacterInfoString(backgroundPath_tag, jsonCharacterData).replace("\\", "");
                             dcInfo.setBackgroundPath( backgroundPath_val );
 
                             String emblemHash_tag = "\"emblemHash\":";
