@@ -1,5 +1,7 @@
 package com.cs370.gwtm.destinygearandguns.model;
 
+import com.android.volley.toolbox.NetworkImageView;
+
 /**
  * Created by Kiladre on 4/15/15.
  * For storing information for particular characters
@@ -12,20 +14,12 @@ public class DestinyCharacterInfo {
     long raceHash;
     long genderHash;
     long classHash;
-
-    public long getEmblemHash() {
-        return emblemHash;
-    }
-
-    public void setEmblemHash(long emblemHash) {
-        this.emblemHash = emblemHash;
-    }
-
     long emblemHash;
     int genderType;
     int classType;
     String emblemPath;
     String backgroundPath;
+    NetworkImageView backgroundImg;
 
     public DestinyCharacterInfo() {
         membershipId = "";
@@ -42,7 +36,21 @@ public class DestinyCharacterInfo {
         backgroundPath = "";
     }
 
+    public NetworkImageView getBackgroundImg() {
+        return backgroundImg;
+    }
 
+    public void setBackgroundImg(NetworkImageView backgroundImg) {
+        this.backgroundImg = backgroundImg;
+    }
+
+    public long getEmblemHash() {
+        return emblemHash;
+    }
+
+    public void setEmblemHash(long emblemHash) {
+        this.emblemHash = emblemHash;
+    }
 
     public String getMembershipId() {
         return membershipId;
