@@ -16,9 +16,9 @@ import java.util.ArrayList;
 /**
  * Created by josh on 4/12/15.
  */
-public class CharacterArrayAdapter extends ArrayAdapter<DestinyCharacters> {
+public class CharacterArrayAdapter extends ArrayAdapter<DestinyCharacterInfo> {
 
-    public CharacterArrayAdapter(Context context, ArrayList<DestinyCharacters> users) {
+    public CharacterArrayAdapter(Context context, ArrayList<DestinyCharacterInfo> users) {
         super(context, 0, users);
     }
     @Override
@@ -26,7 +26,7 @@ public class CharacterArrayAdapter extends ArrayAdapter<DestinyCharacters> {
 
 
         // Get the data item for this position
-        DestinyCharacters characters = getItem(position);
+        DestinyCharacterInfo characters = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
@@ -39,8 +39,8 @@ public class CharacterArrayAdapter extends ArrayAdapter<DestinyCharacters> {
         TextView character = (TextView) convertView.findViewById(R.id.character);
 
         // Populate the data into the template view using the data object
-        level.setText("13");
-        hours.setText("700");
+        level.setText(Integer.toString(characters.getCharacterLevel()));
+        hours.setText(characters.getEmblemPath().replace("\\", ""));
         character.setText(characters.getCharacterId());
 
         // Return the completed view to render on screen

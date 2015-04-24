@@ -28,20 +28,26 @@ public class DestinyCharacterInfo {
     String backgroundPath;
 
     public DestinyCharacterInfo() {
-        membershipId = "";
-        membershipType = 0;
+        //membershipId = "";
+        //membershipType = 0;
         characterId = "";
         characterLevel = 0;
-        raceHash = 0;
+        /*raceHash = 0;
         genderHash = 0;
         classHash = 0;
         emblemHash = 0;
         genderType = 0;
-        classType = 0;
+        classType = 0;*/
         emblemPath = "";
         backgroundPath = "";
     }
 
+    public DestinyCharacterInfo(String characterId, int characterLevel, String emblemPath, String backgroundPath) {
+        this.characterId = characterId;
+        this.characterLevel = characterLevel;
+        this.emblemPath = emblemPath;
+        this.backgroundPath = backgroundPath;
+    }
 
 
     public String getMembershipId() {
@@ -131,4 +137,5 @@ public class DestinyCharacterInfo {
     public void setBackgroundPath(String backgroundPath) {
         this.backgroundPath = backgroundPath;
     }
+
 }

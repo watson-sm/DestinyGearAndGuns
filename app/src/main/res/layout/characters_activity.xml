@@ -27,6 +27,7 @@
         android:layout_below="@id/character"
         android:layout_alignLeft="@id/character"
         android:layout_alignStart="@id/character"
+        android:gravity="center_vertical"
         android:background="#ff000000"
         android:textColor="#ffffff"
         android:paddingBottom="2dp" />
@@ -39,9 +40,10 @@
         android:layout_toRightOf="@+id/level"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:background="#ff000000"
+        android:textSize="12sp"
         android:textColor="#ffffff"
         android:layout_marginBottom="2dp"
-        android:layout_marginLeft="2dp" />
+        android:layout_marginStart="2dp" />
 
     <ImageView
         android:layout_width="30dp"

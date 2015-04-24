@@ -29,10 +29,15 @@
         </activity>
         <activity
             android:name=".activity.DisplayInventoryActivity"
-            android:label="@string/title_activity_dispaly_characters_inventory" >
+            android:label="@string/title_activity_display_inventory"
+            android:parentActivityName=".activity.DisplayCharactersActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.DisplayCharactersActivity" />
+        </activity>
+        <activity
+            android:name=".activity.InventoryActivity"
+            android:label="@string/title_activity_inventory" >
         </activity>
     </application>
 
