@@ -4,8 +4,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.cs370.gwtm.destinygearandguns.R;
+import com.cs370.gwtm.destinygearandguns.interfaces.InventoryArrayAdapter;
+import com.cs370.gwtm.destinygearandguns.model.DestinyInventory;
+
+import java.util.ArrayList;
 
 public class DisplayInventoryActivity extends ActionBarActivity {
 
@@ -13,6 +18,17 @@ public class DisplayInventoryActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_inventory);
+        populateUsersList();
+    }
+
+    private void populateUsersList() {
+    // Construct the data source
+        ArrayList<DestinyInventory> arrayOfUsers = DestinyInventory.getInventory();
+    // Create the adapter to convert the array to views
+        InventoryArrayAdapter adapter = new InventoryArrayAdapter(this, arrayOfUsers);
+    // Attach the adapter to a ListView
+        ListView listView = (ListView) findViewById(R.id.inventoryList);
+        listView.setAdapter(adapter);
     }
 
 
