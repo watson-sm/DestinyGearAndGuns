@@ -12,4 +12,5 @@ public interface IPlayerCharacterListener {
     public void playerMembershipCallback(DestinyMembership dm);
     public void playerCharacterCallback(DestinyCharacters[] dc);
     public void playerCharacterInfoCallback(DestinyCharacterInfo dcInfo);
+    //public void playerCharacterClassCallback(CharacterClass characterClass);
 }

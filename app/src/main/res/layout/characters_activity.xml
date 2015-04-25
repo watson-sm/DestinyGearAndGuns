@@ -6,7 +6,9 @@
     android:paddingLeft="2dp"
     android:paddingTop="4dp">
 
-    <TextView
+
+
+    <!-- <TextView
         android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:id="@+id/character"
@@ -20,18 +22,12 @@
         android:onClick="getInventory"
         android:clickable="true" />
 
-    <TextView
-        android:id="@+id/level"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
         android:layout_below="@id/character"
         android:layout_alignLeft="@id/character"
-        android:layout_alignStart="@id/character"
-        android:background="#ff000000"
-        android:textColor="#ffffff"
-        android:paddingBottom="2dp" />
+        android:layout_alignStart="@id/character" -->
 
-    <TextView
+
+    <!--<TextView
         android:id="@+id/hours"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
@@ -39,9 +35,10 @@
         android:layout_toRightOf="@+id/level"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:background="#ff000000"
+        android:textSize="12sp"
         android:textColor="#ffffff"
         android:layout_marginBottom="2dp"
-        android:layout_marginLeft="2dp" />
+        android:layout_marginStart="2dp" />
 
     <ImageView
         android:layout_width="30dp"
@@ -53,11 +50,44 @@
         android:gravity="end"
         android:paddingBottom="4dp"
         android:onClick="getInventory"
-        android:clickable="true" />
+        android:clickable="true"
+        android:background="#80000000"/> -->
 
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/networkImageView"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:layout_height="55dp"
+        android:layout_width="fill_parent"
+        android:onClick="getInventory"
+        android:clickable="true" />
+<!--
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/networkImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+-->
+    <TextView
+        android:id="@+id/level"
+        android:layout_width="30dp"
+        android:layout_height="55dp"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        android:background="#80000000"
+        android:textColor="#ffffff"
+        android:paddingBottom="2dp"
+        android:layout_alignParentStart="true" />
 
+    <!-- <TextView
+        android:layout_width="30dp"
+        android:layout_height="55dp"
+        android:text=">"
+        android:textSize="40sp"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical"
+        android:paddingBottom="4dp"
+        android:onClick="getInventory"
+        android:clickable="true"
+        android:background="#80000000"
+        android:textColor="#ffffff" /> -->
 </RelativeLayout>
