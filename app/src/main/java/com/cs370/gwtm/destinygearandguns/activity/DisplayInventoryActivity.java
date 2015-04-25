@@ -1,21 +1,45 @@
 package com.cs370.gwtm.destinygearandguns.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 
 import com.cs370.gwtm.destinygearandguns.R;
+import com.cs370.gwtm.destinygearandguns.controller.CharacterInventory;
+import com.cs370.gwtm.destinygearandguns.interfaces.ICharacterInventoryListener;
+import com.cs370.gwtm.destinygearandguns.model.Equippable;
 
-public class DisplayInventoryActivity extends ActionBarActivity {
+import java.util.ArrayList;
+
+public class DisplayInventoryActivity extends ActionBarActivity implements ICharacterInventoryListener {
+
+    private CharacterInventory CI;
+
+    /*
+    @Override
+    public void playerCharacterInventoryCallback(ArrayList<Equippable> equippable) {
+        // Inventory
+    }
+    */
+    @Override
+    public void playerCharacterInventoryCallback(Equippable equippable) {
+        // Inventory
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_inventory);
+
+        CI = new CharacterInventory(this);
+
+        Intent intent = getIntent();
+
+        CI.getInventory();
     }
 
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -37,4 +61,5 @@ public class DisplayInventoryActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+*/
 }
