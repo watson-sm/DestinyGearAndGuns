@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -23,33 +22,42 @@ import java.util.ArrayList;
 
 public class DisplayCharactersActivity extends ActionBarActivity implements IPlayerCharacterListener {
 
-    private TextView textView;
+    //private TextView textView = (TextView) findViewById(R.id.);
     private PlayerCharacters pc;
     final static private String BUNGIE_URL = "https://www.bungie.net";
+
+    public ArrayList<DestinyCharacterInfo> characterInfo = new ArrayList<>();
 
     @Override
     public void playerMembershipCallback(DestinyMembership dm) {
         if ( !dm.getMembershipId().isEmpty() )
             pc.pullCharacters(dm.getMembershipType(), dm.getMembershipId());
-        else
-            textView.setText("MembershipID is blank");
+        //textView.setText("MembershipID is blank");
     }
 
     @Override
     public void playerCharacterCallback(DestinyCharacters[] dc) {
-        ArrayList<DestinyCharacters> Ids = new ArrayList<>();
+        //ArrayList<DestinyCharacters> Ids = new ArrayList<>();
+        ArrayList<DestinyCharacterInfo> Ids = new ArrayList<>();
         setContentView(R.layout.activity_display_character_list);
+        //setContentView(R.layout.characters_activity);
 
         // Player's can have up to 3 characters.
         for(int i = 0; i < 3; i++) {
             pc.pullCharacterInfo(dc[i].getMembershipType(), dc[i].getMembershipId(), dc[i].getCharacterId());
+
+            //Log.v("CharacterID: ", dc[i].getCharacterId() );
+
             if( !dc[i].toString().equals("") ) {
-                Ids.add(new DestinyCharacters(dc[i].toString()));
+                //Ids.add(new DestinyCharacters(dc[i].toString()));
+                //Ids.add(new DestinyCharacterInfo(dc[i].toString()));
                 CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, Ids);
+                //CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, characterInfo);
                 ListView listView = (ListView) findViewById(R.id.characterList);
                 listView.setAdapter(adapter);
             }
         }
+
     }
 
     @Override
@@ -57,38 +65,46 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         // TODO figure out how to use emblem and background path to load images from url
         // and put in character level.
 
-        // Model is loaded...here are example logs see about loading this information into
-        // the view
+        //pc.pullCharacterClass(dcInfo.getClassHash());
+
         ImageLoader imageLoader;
         NetworkImageView networkImageView;
+
         // Get the NetworkImageView that will display the image.
         networkImageView = (NetworkImageView) findViewById(R.id.networkImageView);
 
-        // Get the ImageLoader through your singleton class.
+        if( networkImageView == null )
+            Log.v("networkImageView: ", "Not getting assigned");
+
         imageLoader = VolleySingleton.getInstance(this).getImageLoader();
 
-        // Set the URL of the image that should be loaded into this view, and
-        // specify the ImageLoader that will be used to make the request.
-        networkImageView.setImageUrl(BUNGIE_URL + dcInfo.getBackgroundPath().replace("\\", ""), imageLoader);
+        if( imageLoader == null )
+            Log.v("imageLoader: ", "Not getting assigned");
 
-        //ListView characterList = (ListView) findViewById(R.id.characterList);
-        //characterList.setBackgroundResource(this.getResources().getIdentifier());
+        networkImageView.setImageUrl(BUNGIE_URL + dcInfo.getBackgroundPath(), imageLoader);
 
-        /*
-        Log.v("character Id: ", dcInfo.getCharacterId() );
-        Log.v("emblem path: ", dcInfo.getEmblemPath() );
-        Log.v("background path: ", dcInfo.getBackgroundPath() );
-        Log.v("character level: ", String.valueOf( dcInfo.getCharacterLevel() ) );
-        Log.v("race hash: ", String.valueOf( dcInfo.getRaceHash() ) );
-        */
-        Log.v("URL: ", BUNGIE_URL + dcInfo.getBackgroundPath().replace("\\", "") );
+        characterInfo.add( new DestinyCharacterInfo(dcInfo.getCharacterId(),
+                                                    dcInfo.getRaceHash(),
+                                                    dcInfo.getEmblemPath(),
+                                                    dcInfo.getBackgroundPath(),
+                                                    imageLoader));
+
+        CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, characterInfo);
+        ListView listView = (ListView) findViewById(R.id.characterList);
+        listView.setAdapter(adapter);
     }
-
+/*
+    public void playerCharacterClassCallback(CharacterClass classType) {
+        Log.v("Character Class: ", classType.getCharacterClass());
+    }
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_display_message);
+        setContentView(R.layout.activity_display_character_list);
 
-        textView = new TextView(this);
+        //textView = new TextView(this);
 
         //PlayerCharacters pc = new PlayerCharacters(this);
         pc = new PlayerCharacters(this);
@@ -103,6 +119,8 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         int serviceChecked = intent.getIntExtra("XBLChecked", 0);
 
         pc.pullMembership(serviceChecked, serviceMemberName);
+
+        //populateUsersList();
     }
 
     public void getInventory(View view) {
@@ -117,19 +135,16 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         getMenuInflater().inflate(R.menu.activity_display_character_list, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 */
