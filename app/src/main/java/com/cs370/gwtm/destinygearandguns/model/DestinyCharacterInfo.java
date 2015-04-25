@@ -1,5 +1,7 @@
 package com.cs370.gwtm.destinygearandguns.model;
 
+import com.android.volley.toolbox.ImageLoader;
+
 /**
  * Created by Kiladre on 4/15/15.
  * For storing information for particular characters
@@ -26,27 +28,29 @@ public class DestinyCharacterInfo {
     int classType;
     String emblemPath;
     String backgroundPath;
+    ImageLoader imageLoader;
 
     public DestinyCharacterInfo() {
         //membershipId = "";
         //membershipType = 0;
         characterId = "";
         characterLevel = 0;
-        /*raceHash = 0;
-        genderHash = 0;
+        raceHash = 0;
+        //genderHash = 0;
         classHash = 0;
-        emblemHash = 0;
+        /*emblemHash = 0;
         genderType = 0;
         classType = 0;*/
         emblemPath = "";
         backgroundPath = "";
     }
 
-    public DestinyCharacterInfo(String characterId, int characterLevel, String emblemPath, String backgroundPath) {
+    public DestinyCharacterInfo(String characterId, long raceHash, String emblemPath, String backgroundPath, ImageLoader imageLoader) {
         this.characterId = characterId;
-        this.characterLevel = characterLevel;
+        this.raceHash = raceHash;
         this.emblemPath = emblemPath;
         this.backgroundPath = backgroundPath;
+        this.imageLoader = imageLoader;
     }
 
 
@@ -137,5 +141,9 @@ public class DestinyCharacterInfo {
     public void setBackgroundPath(String backgroundPath) {
         this.backgroundPath = backgroundPath;
     }
+
+    public ImageLoader getImageLoader() { return imageLoader; }
+
+    public void setImageLoader(ImageLoader imageLoader) { this.imageLoader = imageLoader; }
 
 }

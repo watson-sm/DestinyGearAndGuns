@@ -7,9 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.cs370.gwtm.destinygearandguns.R;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacterInfo;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacters;
+import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 
 import java.util.ArrayList;
 
@@ -18,6 +21,7 @@ import java.util.ArrayList;
  */
 public class CharacterArrayAdapter extends ArrayAdapter<DestinyCharacterInfo> {
 
+    final static private String BUNGIE_URL = "https://www.bungie.net";
     public CharacterArrayAdapter(Context context, ArrayList<DestinyCharacterInfo> users) {
         super(context, 0, users);
     }
@@ -35,13 +39,15 @@ public class CharacterArrayAdapter extends ArrayAdapter<DestinyCharacterInfo> {
 
         // Lookup view for data population
         TextView level = (TextView) convertView.findViewById(R.id.level);
-        TextView hours = (TextView) convertView.findViewById(R.id.hours);
-        TextView character = (TextView) convertView.findViewById(R.id.character);
+        //TextView hours = (TextView) convertView.findViewById(R.id.hours);
+        //TextView character = (TextView) convertView.findViewById(R.id.character);
+        NetworkImageView networkImageView = (NetworkImageView) convertView.findViewById(R.id.networkImageView);
 
         // Populate the data into the template view using the data object
         level.setText(Integer.toString(characters.getCharacterLevel()));
-        hours.setText(characters.getEmblemPath().replace("\\", ""));
-        character.setText(characters.getCharacterId());
+        //hours.setText(characters.getEmblemPath().replace("\\", ""));
+        //character.setText(characters.getCharacterId());
+        networkImageView.setImageUrl(BUNGIE_URL + characters.getBackgroundPath().replace("\\", ""), characters.getImageLoader());
 
         // Return the completed view to render on screen
         return convertView;

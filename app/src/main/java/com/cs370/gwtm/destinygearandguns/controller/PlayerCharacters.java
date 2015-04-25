@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.cs370.gwtm.destinygearandguns.activity.DisplayCharactersActivity;
 import com.cs370.gwtm.destinygearandguns.interfaces.IPlayerCharacterListener;
+import com.cs370.gwtm.destinygearandguns.model.CharacterClass;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacterInfo;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacters;
 import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
@@ -34,6 +35,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
         iPCL = playerCharacterListener;
         ctx = (Context) playerCharacterListener;
     }
+
     public void pullMembership(int serviceChecked, String serviceMemberName) {
         RequestQueue myQueue = VolleySingleton.getInstance( ctx.getApplicationContext() ).getRequestQueue();
 
@@ -248,6 +250,62 @@ public class PlayerCharacters extends DisplayCharactersActivity {
 
         // Add JSON Object Request to Volley Queue
         myQueue.add(jsonDestinyCharacterInfo);
+    }
+
+    public void pullCharacterClass(long classHash) {
+        RequestQueue myQueue = VolleySingleton.getInstance( ctx.getApplicationContext() ).getRequestQueue();
+        String hash = Long.toString(classHash);
+
+        String searchClassURL = "https://www.bungie.net/Platform/Destiny/Manifest/DestinyClassDefinition/" + hash + "/";
+
+        /*
+         * Destiny Character Class info request
+         */
+        JsonObjectRequest jsonCharacterClass = new JsonObjectRequest(Request.Method.GET, searchClassURL, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            CharacterClass characterClass = new CharacterClass();
+                            //Log.v("We made: ", "it");
+
+                            // This is pulling the character base information
+
+                            // This is pulling the leveling information
+                            // from destiny character summary
+                            // ex file: destiny_character_summary_hr.txt
+
+
+                            // Essentially pulling everything
+                            String jsonCharacterData = response.getJSONObject("")
+                                    .getJSONObject("data")
+                                    .toString();
+
+                            Log.v("We made: ", "it");
+
+                            String class_tag = "\"className\":";
+                            String class_val = parseCharacterInfoString(class_tag, jsonCharacterData);
+                            //dcInfo.setMembershipId(membershipId_val);
+
+                            //Log.v("Class", class_val);
+
+                            iPCL.playerCharacterClassCallback(characterClass);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(ctx.getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        Log.v("Error", error.toString() );
+                    }
+                }); // End JSON Object Request
+
+        // Add JSON Object Request to Volley Queue
+        myQueue.add(jsonCharacterClass);
     }
 
     String parseCharacterInfoNum(String attribute, String jsonCharacterData) {
