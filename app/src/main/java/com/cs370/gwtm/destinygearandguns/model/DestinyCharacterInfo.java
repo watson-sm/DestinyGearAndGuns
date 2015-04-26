@@ -52,10 +52,10 @@ public class DestinyCharacterInfo {
         return emblemHash;
     }
 */
-    public DestinyCharacterInfo(String characterId, long raceHash, String emblemPath, String
+    public DestinyCharacterInfo(String characterId, int characterLevel, String emblemPath, String
                                 backgroundPath, ImageLoader imageLoader) {
         this.characterId = characterId;
-        this.raceHash = raceHash;
+        this.characterLevel = characterLevel;
         this.emblemPath = emblemPath;
         this.backgroundPath = backgroundPath;
         this.imageLoader = imageLoader;

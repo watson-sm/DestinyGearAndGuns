@@ -68,23 +68,14 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         //pc.pullCharacterClass(dcInfo.getClassHash());
 
         ImageLoader imageLoader;
-        NetworkImageView networkImageView;
-
-        // Get the NetworkImageView that will display the image.
-        networkImageView = (NetworkImageView) findViewById(R.id.networkImageView);
-
-        if( networkImageView == null )
-            Log.v("networkImageView: ", "Not getting assigned");
 
         imageLoader = VolleySingleton.getInstance(this).getImageLoader();
 
         if( imageLoader == null )
             Log.v("imageLoader: ", "Not getting assigned");
 
-        networkImageView.setImageUrl(BUNGIE_URL + dcInfo.getBackgroundPath(), imageLoader);
-
         characterInfo.add( new DestinyCharacterInfo(dcInfo.getCharacterId(),
-                                                    dcInfo.getRaceHash(),
+                                                    dcInfo.getCharacterLevel(),
                                                     dcInfo.getEmblemPath(),
                                                     dcInfo.getBackgroundPath(),
                                                     imageLoader));
