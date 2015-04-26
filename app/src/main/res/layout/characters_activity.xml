@@ -6,29 +6,8 @@
     android:paddingLeft="2dp"
     android:paddingTop="4dp">
 
-
-
-    <!-- <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:id="@+id/character"
-        android:background="#ff000000"
-        android:textColor="#ffffff"
-        android:gravity="start"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginBottom="2dp"
-        android:onClick="getInventory"
-        android:clickable="true" />
-
-        android:layout_below="@id/character"
-        android:layout_alignLeft="@id/character"
-        android:layout_alignStart="@id/character" -->
-
-
     <!--<TextView
-        android:id="@+id/hours"
+        android:id="@+id/CharacterCa"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:layout_below="@+id/character"
@@ -77,6 +56,19 @@
         android:textColor="#ffffff"
         android:paddingBottom="2dp"
         android:layout_alignParentStart="true" />
+
+    <!-- <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:id="@+id/CharacterClass"
+        android:background="#ff000000"
+        android:textColor="#ffffff"
+        android:gravity="start"
+        android:layout_toStartOf="@id/level"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginBottom="2dp"
+        android:onClick="getInventory"
+        android:clickable="true" /> -->
 
     <!-- <TextView
         android:layout_width="30dp"

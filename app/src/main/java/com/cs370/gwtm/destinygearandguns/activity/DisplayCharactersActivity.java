@@ -13,6 +13,7 @@ import com.cs370.gwtm.destinygearandguns.R;
 import com.cs370.gwtm.destinygearandguns.controller.PlayerCharacters;
 import com.cs370.gwtm.destinygearandguns.interfaces.CharacterArrayAdapter;
 import com.cs370.gwtm.destinygearandguns.interfaces.IPlayerCharacterListener;
+import com.cs370.gwtm.destinygearandguns.model.CharacterClass;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacterInfo;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacters;
 import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
@@ -27,6 +28,7 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
     final static private String BUNGIE_URL = "https://www.bungie.net";
 
     public ArrayList<DestinyCharacterInfo> characterInfo = new ArrayList<>();
+    public CharacterClass publicCharacterClass = new CharacterClass();
 
     @Override
     public void playerMembershipCallback(DestinyMembership dm) {
@@ -46,16 +48,6 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         for(int i = 0; i < 3; i++) {
             pc.pullCharacterInfo(dc[i].getMembershipType(), dc[i].getMembershipId(), dc[i].getCharacterId());
 
-            //Log.v("CharacterID: ", dc[i].getCharacterId() );
-
-            if( !dc[i].toString().equals("") ) {
-                //Ids.add(new DestinyCharacters(dc[i].toString()));
-                //Ids.add(new DestinyCharacterInfo(dc[i].toString()));
-                CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, Ids);
-                //CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, characterInfo);
-                ListView listView = (ListView) findViewById(R.id.characterList);
-                listView.setAdapter(adapter);
-            }
         }
 
     }
@@ -65,14 +57,15 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         // TODO figure out how to use emblem and background path to load images from url
         // and put in character level.
 
-        //pc.pullCharacterClass(dcInfo.getClassHash());
+        pc.pullCharacterClass(dcInfo.getClassHash());
 
         ImageLoader imageLoader;
 
         imageLoader = VolleySingleton.getInstance(this).getImageLoader();
 
-        if( imageLoader == null )
+        if( imageLoader == null ) {
             Log.v("imageLoader: ", "Not getting assigned");
+        }
 
         characterInfo.add( new DestinyCharacterInfo(dcInfo.getCharacterId(),
                                                     dcInfo.getCharacterLevel(),
@@ -84,11 +77,13 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         ListView listView = (ListView) findViewById(R.id.characterList);
         listView.setAdapter(adapter);
     }
-/*
+
     public void playerCharacterClassCallback(CharacterClass classType) {
-        Log.v("Character Class: ", classType.getCharacterClass());
+        Log.v("Class: ", classType.getCharacterClass());
+        publicCharacterClass = classType;
+
     }
-*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

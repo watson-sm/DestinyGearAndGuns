@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.cs370.gwtm.destinygearandguns.activity.DisplayCharactersActivity;
 import com.cs370.gwtm.destinygearandguns.interfaces.IPlayerCharacterListener;
+import com.cs370.gwtm.destinygearandguns.model.CharacterClass;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacterInfo;
 import com.cs370.gwtm.destinygearandguns.model.DestinyCharacters;
 import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
@@ -177,6 +178,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                                     .getJSONObject("data")
                                     .toString();
 
+
                             String membershipId_tag = "\"membershipId\":";
                             String membershipId_val = parseCharacterInfoString(membershipId_tag, jsonCharacterData);
                             dcInfo.setMembershipId(membershipId_val);
@@ -243,17 +245,17 @@ public class PlayerCharacters extends DisplayCharactersActivity {
         // Add JSON Object Request to Volley Queue
         myQueue.add(jsonDestinyCharacterInfo);
     }
-/*
+
     public void pullCharacterClass(long classHash) {
         RequestQueue myQueue = VolleySingleton.getInstance( ctx.getApplicationContext() ).getRequestQueue();
         String hash = Long.toString(classHash);
 
-        String searchClassURL = "https://www.bungie.net/Platform/Destiny/Manifest/DestinyClassDefinition/" + hash + "/";
+        String searchClassURL = "https://www.bungie.net/Platform/Destiny/Manifest/class/" + hash + "/";
 
         /*
          * Destiny Character Class info request
-         *
-        JsonObjectRequest jsonCharacterClass = new JsonObjectRequest(Request.Method.GET, searchClassURL, null,
+         */
+        final JsonObjectRequest jsonCharacterClass = new JsonObjectRequest(Request.Method.GET, searchClassURL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -261,26 +263,12 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                             CharacterClass characterClass = new CharacterClass();
                             //Log.v("We made: ", "it");
 
-                            // This is pulling the character base information
+                            // This is pulling the character class information
+                            String jsonCharacterClass = response.getJSONObject("Response").getJSONObject("data").toString();
 
-                            // This is pulling the leveling information
-                            // from destiny character summary
-                            // ex file: destiny_character_summary_hr.txt
-
-
-                            // Essentially pulling everything
-
-                            String jsonCharacterData = response.getJSONObject("")
-                                    .getJSONObject("data")
-                                    .toString();
-
-                            //Log.v("We made: ", "it");
-
-                            //String class_tag = "\"className\":";
-                            //String class_val = parseCharacterInfoString(class_tag, jsonCharacterData);
-                            //dcInfo.setMembershipId(membershipId_val);
-
-                            //Log.v("Class", class_val);
+                            String class_tag = "\"className\":";
+                            String class_val = parseCharacterInfoString(class_tag, jsonCharacterClass);
+                            characterClass.setCharacterClass(class_val);
 
                             iPCL.playerCharacterClassCallback(characterClass);
 
@@ -300,7 +288,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
         // Add JSON Object Request to Volley Queue
         myQueue.add(jsonCharacterClass);
     }
-*/
+
     String parseCharacterInfoNum(String attribute, String jsonCharacterData) {
         int tmpFirstIdx = jsonCharacterData.indexOf(attribute);
 
