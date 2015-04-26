@@ -8,6 +8,8 @@ import com.cs370.gwtm.destinygearandguns.R;
 import com.cs370.gwtm.destinygearandguns.controller.CharacterInventory;
 import com.cs370.gwtm.destinygearandguns.interfaces.ICharacterInventoryListener;
 import com.cs370.gwtm.destinygearandguns.model.Equippable;
+
+import android.util.Log;
 import android.widget.ListView;
 import com.cs370.gwtm.destinygearandguns.interfaces.InventoryArrayAdapter;
 import com.cs370.gwtm.destinygearandguns.model.DestinyInventory;
@@ -27,6 +29,12 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
     @Override
     public void playerCharacterInventoryCallback(Equippable equippable) {
         // Inventory
+
+        // Bucket has seems to have been populated by the gson
+        Log.v("Bucket Hash: ", String.valueOf( equippable.getBucketHash() ) );
+
+        // Trying to figure out how to check the nested arrays
+        Log.v("Item Hash: ", String.valueOf( equippable.items.get(0).getItemHash() ) );
     }
 
     @Override
