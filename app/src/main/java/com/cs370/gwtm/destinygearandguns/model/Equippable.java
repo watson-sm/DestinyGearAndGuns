@@ -1,11 +1,10 @@
 package com.cs370.gwtm.destinygearandguns.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Kiladre on 4/25/15.
- * Attempting GSONs auto populate from json
+ * Attempting GSONs auto populate from JSON
  */
 public class Equippable {
     public long getBucketHash() {
@@ -15,16 +14,15 @@ public class Equippable {
     public void setBucketHash(long bucketHash) {
         this.bucketHash = bucketHash;
     }
-/*
-    public ArrayList<items> getItems() {
+
+    public List<items> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<items> items) {
+    public void setItems(List<items> items) {
         this.items = items;
     }
-*/
-    //ArrayList<items> items;
+
     long bucketHash;
     public List<items> items;
 
