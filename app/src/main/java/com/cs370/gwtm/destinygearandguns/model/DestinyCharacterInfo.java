@@ -113,11 +113,11 @@ public class DestinyCharacterInfo {
     public void setGenderHash(long genderHash) {
         this.genderHash = genderHash;
     }
-/*
+
     public long getClassHash() {
         return classHash;
     }
-*/
+
     public void setClassHash(long classHash) {
         this.classHash = classHash;
     }

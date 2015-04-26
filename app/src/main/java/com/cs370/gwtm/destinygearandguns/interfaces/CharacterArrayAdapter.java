@@ -38,13 +38,13 @@ public class CharacterArrayAdapter extends ArrayAdapter<DestinyCharacterInfo> {
         // Lookup view for data population
         TextView level = (TextView) convertView.findViewById(R.id.level);
         //TextView hours = (TextView) convertView.findViewById(R.id.hours);
-        //TextView character = (TextView) convertView.findViewById(R.id.character);
+        TextView characterClass = (TextView) convertView.findViewById(R.id.CharacterClass);
         NetworkImageView networkImageView = (NetworkImageView) convertView.findViewById(R.id.networkImageView);
 
         // Populate the data into the template view using the data object
+        characterClass.setText(characters.getCharacterId());
         level.setText(Integer.toString(characters.getCharacterLevel()));
         //hours.setText(characters.getEmblemPath().replace("\\", ""));
-        //character.setText(characters.getCharacterId());
         networkImageView.setImageUrl(BUNGIE_URL + characters.getBackgroundPath().replace("\\", ""), characters.getImageLoader());
 
         // Return the completed view to render on screen
