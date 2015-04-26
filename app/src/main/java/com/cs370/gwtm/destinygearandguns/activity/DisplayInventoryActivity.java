@@ -15,6 +15,7 @@ import com.cs370.gwtm.destinygearandguns.interfaces.InventoryArrayAdapter;
 import com.cs370.gwtm.destinygearandguns.model.DestinyInventory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DisplayInventoryActivity extends ActionBarActivity implements ICharacterInventoryListener {
 
@@ -27,14 +28,36 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
     }
     */
     @Override
-    public void playerCharacterInventoryCallback(Equippable equippable) {
+    public void playerCharacterInventoryCallback(List<Equippable> equippable) {
         // Inventory
 
+        // TODO NOTE THIS IS A LITTLE BACKWARDS DUE TO JSON
+        // So...each "items" array only holds 1 array element
+        /*
+         * Heirarchy
+         *  - Equippable[0 : size]
+         *  - - items [0 only]
+         *  - - - nodes[0 : size]
+         *
+         *  etc.
+         *  So think of it like equippable[0] is the first "item"
+         *  equippable[1] is the 2nd "item" etc.
+         *  though equippable[0] if I'm correct is actually the selected class's chosen subclass.
+         *
+         *  review destiny_character_inventory_hr.json for more information on the layout.
+         */
         // Bucket has seems to have been populated by the gson
-        Log.v("Bucket Hash: ", String.valueOf( equippable.getBucketHash() ) );
+        Log.v("Bucket Hash: ", String.valueOf( equippable.get(0).getBucketHash() ) );
 
         // Trying to figure out how to check the nested arrays
-        Log.v("Item Hash: ", String.valueOf( equippable.items.get(0).getItemHash() ) );
+        // This currently only works with a value of 0, anything > 0 gives a throws
+        // an array out of bounds exception
+        Log.v("Item Hash: ", String.valueOf(equippable.get(0).items.get(0).getItemHash()));
+        Log.v("Size of Item List: ", String.valueOf( equippable.get(0).items.size() ) );
+        Log.v("Size of Equippable: ", String.valueOf( equippable.size() ) );
+
+        // Nodes list seems to be populating fine.
+        Log.v("Node Hash: ", String.valueOf(equippable.get(0).items.get(0).nodes.get(2).getNodeHash()));
     }
 
     @Override

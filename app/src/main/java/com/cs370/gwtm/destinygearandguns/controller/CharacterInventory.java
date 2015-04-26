@@ -15,12 +15,18 @@ import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * Created by Kiladre on 4/25/15.
+ * Character Inventory Controller
+ * Pull character's inventory for activity to display
  */
 public class CharacterInventory extends DisplayInventoryActivity {
 
@@ -40,6 +46,9 @@ public class CharacterInventory extends DisplayInventoryActivity {
          * https://www.bungie.net/platform/destiny
          * /{membershipType}/Account/{destinyMembershipId}/Character/{characterId}/Inventory/
          */
+
+        // TODO update inventoryURL so it's not hard coded.
+        // Change values depending on which character the user selected.
         String inventoryURL = "https://www.bungie.net/platform/destiny/"
                             + "2/Account/4611686018428756196/Character/2305843009215199142/Inventory/";
 
@@ -48,6 +57,7 @@ public class CharacterInventory extends DisplayInventoryActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+
                             String jsonResponseString = response.getJSONObject("Response")
                                                                 .getJSONObject("data")
                                                                 .getJSONObject("buckets")
@@ -59,12 +69,13 @@ public class CharacterInventory extends DisplayInventoryActivity {
                             // BEWARE "JSONArray" is org.json & "JsonArray" is com.google.gson
                             JsonArray jsonArray = myParser.parse(jsonResponseString).getAsJsonArray();
 
-                            //Log.v("jsonResponseString", jsonResponseString);
                             Gson myGson = new Gson();
 
                             // TODO currently the following is only getting 1st element of array
                             // instead of all the elements.
-                            Equippable equippable = myGson.fromJson( jsonArray.get(0), Equippable.class);
+                            Type equippableType = new TypeToken<List<Equippable>>() {}.getType();
+
+                            List<Equippable> equippable = myGson.fromJson( jsonArray, equippableType);
 
                             iCIL.playerCharacterInventoryCallback(equippable);
 
