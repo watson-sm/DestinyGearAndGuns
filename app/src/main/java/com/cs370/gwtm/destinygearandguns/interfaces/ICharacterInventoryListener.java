@@ -10,6 +10,5 @@ import java.util.List;
  * Listener for the inventory call
  */
 public interface ICharacterInventoryListener {
-    //public void playerCharacterInventoryCallback(Equippable equippable);
     public void playerCharacterInventoryCallback(List<Equippable> equippable);
 }

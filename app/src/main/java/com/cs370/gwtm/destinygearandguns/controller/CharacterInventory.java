@@ -71,8 +71,6 @@ public class CharacterInventory extends DisplayInventoryActivity {
 
                             Gson myGson = new Gson();
 
-                            // TODO currently the following is only getting 1st element of array
-                            // instead of all the elements.
                             Type equippableType = new TypeToken<List<Equippable>>() {}.getType();
 
                             List<Equippable> equippable = myGson.fromJson( jsonArray, equippableType);

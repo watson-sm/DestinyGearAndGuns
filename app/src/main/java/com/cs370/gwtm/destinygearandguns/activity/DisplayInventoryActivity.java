@@ -21,12 +21,6 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
 
     private CharacterInventory CI;
 
-    /*
-    @Override
-    public void playerCharacterInventoryCallback(ArrayList<Equippable> equippable) {
-        // Inventory
-    }
-    */
     @Override
     public void playerCharacterInventoryCallback(List<Equippable> equippable) {
         // Inventory
