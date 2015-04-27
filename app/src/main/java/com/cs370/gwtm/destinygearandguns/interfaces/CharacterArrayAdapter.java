@@ -1,6 +1,7 @@
 package com.cs370.gwtm.destinygearandguns.interfaces;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,11 +39,11 @@ public class CharacterArrayAdapter extends ArrayAdapter<DestinyCharacterInfo> {
         // Lookup view for data population
         TextView level = (TextView) convertView.findViewById(R.id.level);
         //TextView hours = (TextView) convertView.findViewById(R.id.hours);
-        //TextView characterClass = (TextView) convertView.findViewById(R.id.CharacterClass);
+        TextView characterClass = (TextView) convertView.findViewById(R.id.CharacterClass);
         NetworkImageView networkImageView = (NetworkImageView) convertView.findViewById(R.id.networkImageView);
 
         // Populate the data into the template view using the data object
-        //characterClass.setText(characters.getCharacterId());
+        characterClass.setText(characters.getCharacterClass());
         level.setText(Integer.toString(characters.getCharacterLevel()));
         //hours.setText(characters.getEmblemPath().replace("\\", ""));
         networkImageView.setImageUrl(BUNGIE_URL + characters.getBackgroundPath().replace("\\", ""), characters.getImageLoader());

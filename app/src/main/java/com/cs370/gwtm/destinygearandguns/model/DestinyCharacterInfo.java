@@ -20,12 +20,17 @@ public class DestinyCharacterInfo {
     int classType;
     String emblemPath;
     String backgroundPath;
+
+
+
+    String characterClass;
     //NetworkImageView backgroundImg;
     ImageLoader imageLoader;
 
     public DestinyCharacterInfo() {
         //membershipId = "";
         //membershipType = 0;
+        characterClass = "";
         characterId = "";
         characterLevel = 0;
         raceHash = 0;
@@ -52,15 +57,22 @@ public class DestinyCharacterInfo {
         return emblemHash;
     }
 */
-    public DestinyCharacterInfo(String characterId, int characterLevel, String emblemPath, String
+    public DestinyCharacterInfo(String characterClass, int characterLevel, String emblemPath, String
                                 backgroundPath, ImageLoader imageLoader) {
-        this.characterId = characterId;
+        this.characterClass = characterClass;
         this.characterLevel = characterLevel;
         this.emblemPath = emblemPath;
         this.backgroundPath = backgroundPath;
         this.imageLoader = imageLoader;
     }
 
+    public String getCharacterClass() {
+        return characterClass;
+    }
+
+    public void setCharacterClass(String characterClass) {
+        this.characterClass = characterClass;
+    }
 
     public void setEmblemHash(long emblemHash) {
         this.emblemHash = emblemHash;

@@ -27,8 +27,10 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
     private PlayerCharacters pc;
     final static private String BUNGIE_URL = "https://www.bungie.net";
 
+    //TODO look into making these private
     public ArrayList<DestinyCharacterInfo> characterInfo = new ArrayList<>();
     public CharacterClass publicCharacterClass = new CharacterClass();
+    public DestinyCharacterInfo publicDestinyCharacacterInfo = new DestinyCharacterInfo();
 
     @Override
     public void playerMembershipCallback(DestinyMembership dm) {
@@ -57,7 +59,14 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         // TODO figure out how to use emblem and background path to load images from url
         // and put in character level.
 
+        publicDestinyCharacacterInfo = dcInfo;
+
         pc.pullCharacterClass(dcInfo.getClassHash());
+
+    }
+
+    public void playerCharacterClassCallback(CharacterClass classType) {
+        publicCharacterClass = classType;
 
         ImageLoader imageLoader;
 
@@ -67,20 +76,16 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
             Log.v("imageLoader: ", "Not getting assigned");
         }
 
-        characterInfo.add( new DestinyCharacterInfo(dcInfo.getCharacterId(),
-                                                    dcInfo.getCharacterLevel(),
-                                                    dcInfo.getEmblemPath(),
-                                                    dcInfo.getBackgroundPath(),
-                                                    imageLoader));
+        //Log.v("Class: ", publicCharacterClass.getCharacterClass());
+        characterInfo.add( new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
+                publicDestinyCharacacterInfo.getCharacterLevel(),
+                publicDestinyCharacacterInfo.getEmblemPath(),
+                publicDestinyCharacacterInfo.getBackgroundPath(),
+                imageLoader));
 
         CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, characterInfo);
         ListView listView = (ListView) findViewById(R.id.characterList);
         listView.setAdapter(adapter);
-    }
-
-    public void playerCharacterClassCallback(CharacterClass classType) {
-        Log.v("Class: ", classType.getCharacterClass());
-        publicCharacterClass = classType;
 
     }
 
