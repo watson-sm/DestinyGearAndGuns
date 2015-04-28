@@ -271,6 +271,8 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                             characterClass.setCharacterClass(class_val);
 
                             iPCL.playerCharacterClassCallback(characterClass);
+                            //Log.v("Class: ", class_val);
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();

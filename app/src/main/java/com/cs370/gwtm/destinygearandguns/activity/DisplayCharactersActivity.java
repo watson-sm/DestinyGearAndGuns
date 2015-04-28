@@ -27,10 +27,16 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
     private PlayerCharacters pc;
     final static private String BUNGIE_URL = "https://www.bungie.net";
 
+    private String info[] = new String[6];
+    private int count = 0;
+    private int previousCount = 0;
+    private int total = 0;
+
     //TODO look into making these private
-    public ArrayList<DestinyCharacterInfo> characterInfo = new ArrayList<>();
-    public CharacterClass publicCharacterClass = new CharacterClass();
-    public DestinyCharacterInfo publicDestinyCharacacterInfo = new DestinyCharacterInfo();
+
+    private ArrayList<DestinyCharacterInfo> characterInfo = new ArrayList<>();
+    private CharacterClass publicCharacterClass = new CharacterClass();
+    private DestinyCharacterInfo publicDestinyCharacacterInfo = new DestinyCharacterInfo();
 
     @Override
     public void playerMembershipCallback(DestinyMembership dm) {
@@ -59,13 +65,24 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         // TODO figure out how to use emblem and background path to load images from url
         // and put in character level.
 
+        //count = 0;
+
         publicDestinyCharacacterInfo = dcInfo;
 
         pc.pullCharacterClass(dcInfo.getClassHash());
 
+        // String array to store character level and background path
+        info[count] = Integer.toString(publicDestinyCharacacterInfo.getCharacterLevel());
+        count = count+1;
+        info[count] = publicDestinyCharacacterInfo.getBackgroundPath();
+        count = count+1;
+
+        //Total number of characters pulled
+        total = total+1;
     }
 
     public void playerCharacterClassCallback(CharacterClass classType) {
+
         publicCharacterClass = classType;
 
         ImageLoader imageLoader;
@@ -76,12 +93,52 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
             Log.v("imageLoader: ", "Not getting assigned");
         }
 
-        //Log.v("Class: ", publicCharacterClass.getCharacterClass());
-        characterInfo.add( new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
-                publicDestinyCharacacterInfo.getCharacterLevel(),
-                publicDestinyCharacacterInfo.getEmblemPath(),
-                publicDestinyCharacacterInfo.getBackgroundPath(),
-                imageLoader));
+        // Keep track of how many times playerCharacterClassCallback has been called
+        previousCount = previousCount + 1;
+
+        Log.v("Count: ", Integer.toString(count));
+        // TODO put in a method (aka a function)
+        // Test to see if more than one character has been pulled before calling playerCharacterClassCallback
+        if(total != previousCount) {
+            // Test to see if all characters were pulled before calling playerCharacterClassCallback
+            if(count == 6 && previousCount == 1) {
+                characterInfo.add(new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
+                        Integer.parseInt(info[count - 6]),
+                        publicDestinyCharacacterInfo.getEmblemPath(),
+                        info[count-5],
+                        imageLoader));
+                }
+
+            // Test to see if two characters were pulled before calling playerCharacterClassCallback
+            else if(count == 6 && previousCount > 1) {
+                Log.v("Character Level if: ", info[count - 4]);
+                Log.v("Background Path if: ", info[count - 3]);
+                characterInfo.add(new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
+                        Integer.parseInt(info[count - 4]),
+                        publicDestinyCharacacterInfo.getEmblemPath(),
+                        info[count-3],
+                        imageLoader));
+            }
+
+            else {
+                characterInfo.add(new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
+                        Integer.parseInt(info[count - 4]),
+                        publicDestinyCharacacterInfo.getEmblemPath(),
+                        info[count-3],
+                        imageLoader));
+                }
+            }
+
+        // If only one character was pulled since calling playerCharacterClassCallback
+        else {
+            Log.v("Character Level: ", info[count - 2]);
+            Log.v("Background Path: ", info[count - 1]);
+            characterInfo.add(new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
+                    Integer.parseInt(info[count - 2]),
+                    info[count - 1],
+                    publicDestinyCharacacterInfo.getBackgroundPath(),
+                    imageLoader));
+        }
 
         CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, characterInfo);
         ListView listView = (ListView) findViewById(R.id.characterList);
