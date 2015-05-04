@@ -32,8 +32,6 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
     private int previousCount = 0;
     private int total = 0;
 
-    //TODO look into making these private
-
     private ArrayList<DestinyCharacterInfo> characterInfo = new ArrayList<>();
     private CharacterClass publicCharacterClass = new CharacterClass();
     private DestinyCharacterInfo publicDestinyCharacacterInfo = new DestinyCharacterInfo();
@@ -111,8 +109,6 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
             // Test to see if two characters were pulled before calling playerCharacterClassCallback
             else if(count == 6 && previousCount > 1) {
-                Log.v("Character Level if: ", info[count - 4]);
-                Log.v("Background Path if: ", info[count - 3]);
                 characterInfo.add(new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
                         Integer.parseInt(info[count - 4]),
                         publicDestinyCharacacterInfo.getEmblemPath(),
@@ -131,8 +127,6 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
         // If only one character was pulled since calling playerCharacterClassCallback
         else {
-            Log.v("Character Level: ", info[count - 2]);
-            Log.v("Background Path: ", info[count - 1]);
             characterInfo.add(new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
                     Integer.parseInt(info[count - 2]),
                     info[count - 1],
