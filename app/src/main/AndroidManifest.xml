@@ -33,11 +33,9 @@
         </activity>
         <activity
             android:name=".activity.DisplayInventoryActivity"
-            android:label="@string/title_activity_display_characters_inventory"
+            android:label="@string/title_activity_display_inventory"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
-            android:label="@string/title_activity_display_inventory"
-            android:parentActivityName=".activity.DisplayCharactersActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.DisplayCharactersActivity" />
