@@ -14,7 +14,6 @@ import com.cs370.gwtm.destinygearandguns.model.Equippable;
 import android.util.Log;
 import android.widget.ListView;
 import com.cs370.gwtm.destinygearandguns.interfaces.InventoryArrayAdapter;
-import com.cs370.gwtm.destinygearandguns.model.DestinyInventory;
 import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 
 import java.util.ArrayList;
@@ -24,8 +23,8 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
 
     private CharacterInventory CI;
     public ArrayList<DestinyInventoryItem> inventoryItems = new ArrayList();
-    int equippableSize = 0;
-    int count = 0;
+    private int equippableSize = 0;
+    private int count = 0;
 
     @Override
     public void playerCharacterInventoryCallback(List<Equippable> equippable) {
@@ -60,26 +59,14 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
         // Nodes list seems to be populating fine.
         //Log.v("Node Hash: ", String.valueOf(equippable.get(0).items.get(0).nodes.get(2).getNodeHash()));
         for (int i = 0; i < equippable.size(); i++) {
-            //Log.v("i: ", Integer.toString(i));
             CI.pullItemInfo(String.valueOf(equippable.get(i).items.get(0).getItemHash()));
-            //Log.v("Item Hash: ", String.valueOf(equippable.get(i).items.get(0).getItemHash()));
-
         }
 
-        /*// Create the adapter to convert the array to views
-        InventoryArrayAdapter adapter = new InventoryArrayAdapter(this, itemList);
-        // Attach the adapter to a ListView
-        ListView listView = (ListView) findViewById(R.id.inventoryList);
-        listView.setAdapter(adapter);*/
     }
 
 
     @Override
     public void playerItemCallback(DestinyInventoryItem inventoryItem) {
-        /*Log.v("Name: ", inventoryItem.getItemName());
-        Log.v("Description: ", inventoryItem.getItemDescription());
-        Log.v("Type: ", inventoryItem.getItemTypeName());
-        Log.v("Tier", inventoryItem.getTierTypeName());*/
 
         ImageLoader imageLoader;
 
@@ -89,32 +76,31 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
             Log.v("imageLoader: ", "Not getting assigned");
         }
 
-        //Log.v("Item Name Callback: ", tempItemName);
         inventoryItems.add(new DestinyInventoryItem(inventoryItem.getItemName(), inventoryItem.getItemDescription(),
                 inventoryItem.getItemTypeName(), inventoryItem.getTierTypeName(), inventoryItem.getIconPath(), imageLoader));
-        //Log.v("Item Name Callback: ", tempItemName);
-        count = count + 1;
+
+        count++;
+
+        // Test to see if Array has been completely populated
         if(count == equippableSize) {
             createView();
         }
-//        Log.v("Item Name: ", tempItemName);
-        //itemList.add(new DestinyInventoryItem(inventoryItem.getItemName()));
-        // Create the adapter to convert the array to views
-        //InventoryArrayAdapter adapter = new InventoryArrayAdapter(this, arrayOfUsers);
-        // Attach the adapter to a ListView
-        //ListView listView = (ListView) findViewById(R.id.inventoryList);
-        //listView.setAdapter(adapter);
 
     }
 
 
     public void createView() {
+
         // Create the adapter to convert the array to views
         InventoryArrayAdapter adapter = new InventoryArrayAdapter(this, inventoryItems);
+
         // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.inventoryList);
         listView.setAdapter(adapter);
+
     }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,22 +110,17 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
 
         Intent intent = getIntent();
 
-        CI.getInventory();
+
+        String CID = intent.getStringExtra("CID");
+        String MID = intent.getStringExtra("MID");
+        String MT = intent.getStringExtra("MT");
+
+        CI.getInventory(MID, CID, MT);
 
     }
 
-/*    private void populateUsersList() {
 
-
-        CI = new CharacterInventory(this);
-
-        Intent intent = getIntent();
-
-        CI.getInventory();
-    }
-
-
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_display_inventory, menu);
