@@ -119,22 +119,22 @@ public class CharacterInventory extends DisplayInventoryActivity {
                             String jsonCharacterClass = response.getJSONObject("Response").getJSONObject("data").toString();
 
                             String item_tag = "\"itemName\":";
-                            String item_name = parseCharacterInfoString(item_tag, jsonCharacterClass);
+                            String item_name = parseCharacterInfoString(item_tag, jsonCharacterClass.replace("\\", ""));
                             inventoryItem.setItemName(item_name);
                             //Log.v("Item Name Pull: ", item_name);
 
                             String description_tag = "\"itemDescription\":";
-                            String item_description = parseCharacterInfoString(description_tag, jsonCharacterClass);
+                            String item_description = parseCharacterInfoString(description_tag, jsonCharacterClass.replace("\\", ""));
                             inventoryItem.setItemDescription(item_description);
                             //Log.v("Item Description Pull: ", item_description);
 
                             String type_tag = "\"itemTypeName\":";
-                            String item_type = parseCharacterInfoString(type_tag, jsonCharacterClass);
+                            String item_type = parseCharacterInfoString(type_tag, jsonCharacterClass.replace("\\", ""));
                             inventoryItem.setItemTypeName(item_type);
                             //Log.v("Item Type Pull: ", item_type);
 
                             String tier_tag = "\"tierTypeName\":";
-                            String tier_type = parseCharacterInfoString(tier_tag, jsonCharacterClass);
+                            String tier_type = parseCharacterInfoString(tier_tag, jsonCharacterClass.replace("\\", ""));
                             inventoryItem.setTierTypeName(tier_type);
                             //Log.v("Tier Type Pull: ", tier_type);
 
@@ -169,7 +169,7 @@ public class CharacterInventory extends DisplayInventoryActivity {
         // Parse the attribute value
         return jsonCharacterData.substring(
                 tmpFirstIdx + attribute.length() + 1,
-                jsonCharacterData.indexOf(",", tmpFirstIdx + attribute.length() ) - 1
+                jsonCharacterData.indexOf(",\"", tmpFirstIdx + attribute.length() ) - 1
         );
     }
 }
