@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,10 +24,11 @@ import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 
 import java.util.ArrayList;
 
-public class DisplayCharactersActivity extends ListActivity implements IPlayerCharacterListener {
+public class DisplayCharactersActivity extends ActionBarActivity implements IPlayerCharacterListener {
 
     private PlayerCharacters pc;
     final static private String BUNGIE_URL = "https://www.bungie.net";
+    //private Intent inventoryIntent = new Intent(this, DisplayInventoryActivity.class);
 
     // Variables used to test how many characters are pulled at a time
     private String info[] = new String[6];
@@ -99,8 +101,25 @@ public class DisplayCharactersActivity extends ListActivity implements IPlayerCh
         checkAmountOfPulledCharacters(imageLoader);
 
         CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, characterInfo);
-        ListView listView = (ListView) findViewById(android.R.id.list);
+        ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Intent inventoryIntent = new Intent(DisplayCharactersActivity.this, DisplayInventoryActivity.class);
+
+                // Pass info needed to pull correct character info
+                inventoryIntent.putExtra("CID", destinyCharacters[position].getCharacterId());
+                inventoryIntent.putExtra("MID", destinyCharacters[position].getMembershipId());
+                inventoryIntent.putExtra("MT", Integer.toString(destinyCharacters[position].getMembershipType()));
+
+                startActivity(inventoryIntent);
+
+                //Toast.makeText(MainActivity.this.
+                //this, "List View row Clicked at" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -132,8 +151,7 @@ public class DisplayCharactersActivity extends ListActivity implements IPlayerCh
     }
 
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
+/*    protected void onListItemClick(ListView l, View v, int position, long id) {
 
         Intent inventoryIntent = new Intent(this, DisplayInventoryActivity.class);
 
@@ -143,7 +161,7 @@ public class DisplayCharactersActivity extends ListActivity implements IPlayerCh
         inventoryIntent.putExtra("MT", Integer.toString(destinyCharacters[position].getMembershipType()));
 
         startActivity(inventoryIntent);
-    }
+    }*/
 
 
     public void checkAmountOfPulledCharacters(ImageLoader imageLoader) {
