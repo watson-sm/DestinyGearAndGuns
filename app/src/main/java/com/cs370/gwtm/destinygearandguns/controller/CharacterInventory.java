@@ -29,6 +29,7 @@ import java.util.List;
  * Character Inventory Controller
  * Pull character's inventory for activity to display
  */
+
 public class CharacterInventory extends DisplayInventoryActivity {
 
     private Context ctx;
@@ -39,8 +40,11 @@ public class CharacterInventory extends DisplayInventoryActivity {
         ctx = (Context) iCharacterInventoryListener;
     }
 
-    public void getInventory() {
+    public void getInventory(String MID, String CID, String MT) {
         RequestQueue myQueue = VolleySingleton.getInstance(ctx.getApplicationContext()).getRequestQueue();
+        //Log.v("MID", MID);
+        //Log.v("CID", CID);
+        //Log.v("CT", MT);
 
         /*
          * Destiny Character Inventory
@@ -51,7 +55,7 @@ public class CharacterInventory extends DisplayInventoryActivity {
         // TODO update inventoryURL so it's not hard coded.
         // Change values depending on which character the user selected.
         String inventoryURL = "https://www.bungie.net/platform/destiny/"
-                            + "2/Account/4611686018428756196/Character/2305843009215199142/Inventory/";
+                            + MT + "/Account/" + MID + "/Character/" + CID + "/Inventory/";
 
         JsonObjectRequest jsonCharacterInventory = new JsonObjectRequest(Request.Method.GET, inventoryURL, null,
                 new Response.Listener<JSONObject>() {
@@ -110,35 +114,34 @@ public class CharacterInventory extends DisplayInventoryActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             DestinyInventoryItem inventoryItem = new DestinyInventoryItem();
-                            //Log.v("We made: ", "it");
 
-                            // This is pulling the character class information
+                            // This is pulling the inventory item information
                             String jsonCharacterClass = response.getJSONObject("Response").getJSONObject("data").toString();
 
                             String item_tag = "\"itemName\":";
                             String item_name = parseCharacterInfoString(item_tag, jsonCharacterClass);
                             inventoryItem.setItemName(item_name);
-                            Log.v("Item Name Pull: ", item_name);
+                            //Log.v("Item Name Pull: ", item_name);
 
                             String description_tag = "\"itemDescription\":";
                             String item_description = parseCharacterInfoString(description_tag, jsonCharacterClass);
                             inventoryItem.setItemDescription(item_description);
-                            Log.v("Item Description Pull: ", item_description);
+                            //Log.v("Item Description Pull: ", item_description);
 
                             String type_tag = "\"itemTypeName\":";
                             String item_type = parseCharacterInfoString(type_tag, jsonCharacterClass);
                             inventoryItem.setItemTypeName(item_type);
-                            Log.v("Item Type Pull: ", item_type);
+                            //Log.v("Item Type Pull: ", item_type);
 
                             String tier_tag = "\"tierTypeName\":";
                             String tier_type = parseCharacterInfoString(tier_tag, jsonCharacterClass);
                             inventoryItem.setTierTypeName(tier_type);
-                            Log.v("Tier Type Pull: ", tier_type);
+                            //Log.v("Tier Type Pull: ", tier_type);
 
                             String icon_tag = "\"icon\":";
                             String icon_val = parseCharacterInfoString(icon_tag, jsonCharacterClass.replace("\\", ""));
                             inventoryItem.setIconPath(icon_val);
-                            Log.v("Icon Path Pull: ", icon_val);
+                            //Log.v("Icon Path Pull: ", icon_val);
 
                             iCIL.playerItemCallback(inventoryItem);
 

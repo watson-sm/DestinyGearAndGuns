@@ -1,23 +1,21 @@
 package com.cs370.gwtm.destinygearandguns.interfaces;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.cs370.gwtm.destinygearandguns.R;
-import com.cs370.gwtm.destinygearandguns.model.DestinyInventory;
 import com.cs370.gwtm.destinygearandguns.model.DestinyInventoryItem;
 
 import java.util.ArrayList;
 
 /**
  * Created by josh on 4/18/15.
+ * Custom array adapter to populate listview
  */
 public class InventoryArrayAdapter extends ArrayAdapter<DestinyInventoryItem> {
 
@@ -34,19 +32,11 @@ public class InventoryArrayAdapter extends ArrayAdapter<DestinyInventoryItem> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_inventory, parent, false);
         }
 
-        //Log.v("URL: ", BUNGIE_URL + items.getIconPath().replace("//", "/"));
-
         TextView name = (TextView) convertView.findViewById(R.id.itemName);
         TextView type = (TextView) convertView.findViewById(R.id.itemType);
         TextView description = (TextView) convertView.findViewById(R.id.itemDescription);
         TextView tier = (TextView) convertView.findViewById(R.id.tierName);
         NetworkImageView networkImageView = (NetworkImageView) convertView.findViewById(R.id.type);
-
-        /*if(items.getItemTypeName().equals("Helmet")) {
-            itemImage.setImageResource(R.drawable.armour);
-        }
-
-        else { itemImage.setImageResource(R.drawable.weapon); }*/
 
         name.setText(items.getItemName());
         type.setText(items.getItemTypeName());

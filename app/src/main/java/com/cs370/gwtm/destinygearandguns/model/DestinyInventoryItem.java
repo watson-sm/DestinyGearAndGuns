@@ -19,6 +19,8 @@ public class DestinyInventoryItem {
         this.itemDescription = itemDescription;
         this.itemTypeName = itemTypeName;
         this.tierTypeName = tierTypeName;
+        this.iconPath = iconPath;
+        this.imageLoader = imageLoader;
     }
 
     public DestinyInventoryItem(String itemName, String itemDescription, String itemTypeName, String tierTypeName, String iconPath,

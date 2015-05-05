@@ -11,16 +11,13 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="2dp"
-        android:layout_marginRight="2dp"
-        android:src="@drawable/weapon"/>
+        android:layout_marginRight="2dp"/>
 
     <TextView
         android:id="@+id/itemName"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:layout_toEndOf="@id/type"
-        android:text="Weapon 1"
         android:gravity="center"
         android:background="#ff000000"
         android:textColor="#ffffff"
@@ -35,8 +32,7 @@
         android:background="#ff000000"
         android:textColor="#ffffff"
         android:layout_marginBottom="2dp"
-        android:gravity="center"
-        android:text="Machine Gun"/>
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/tierName"
@@ -47,7 +43,6 @@
         android:background="#ff000000"
         android:textColor="#ffffff"
         android:layout_marginBottom="2dp"
-        android:text="common"
         android:gravity="center"
         android:layout_marginLeft="2dp"/>
 
@@ -56,7 +51,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/itemType"
-        android:text="This weapon is a rare weapon and level 30 is required to equip."
         android:background="#ff000000"
         android:textColor="#ffffff"
         android:layout_marginBottom="2dp"
