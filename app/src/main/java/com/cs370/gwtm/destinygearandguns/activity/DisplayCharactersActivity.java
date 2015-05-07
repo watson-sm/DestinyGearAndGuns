@@ -55,10 +55,6 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
     @Override
     public void playerCharacterCallback(DestinyCharacters[] dc) {
-        //ArrayList<DestinyCharacters> Ids = new ArrayList<>();
-        //ArrayList<DestinyCharacterInfo> Ids = new ArrayList<>();
-        //setContentView(R.layout.activity_display_character_list);
-        //setContentView(R.layout.characters_activity);
 
         // Player's can have up to 3 characters.
         for(int i = 0; i < 3; i++) {
