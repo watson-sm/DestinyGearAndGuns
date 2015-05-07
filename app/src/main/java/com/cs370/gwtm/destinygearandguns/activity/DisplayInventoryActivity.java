@@ -25,6 +25,7 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
     public ArrayList<DestinyInventoryItem> inventoryItems = new ArrayList();
     private int equippableSize = 0;
     private int count = 0;
+    private String charId;
 
     @Override
     public void playerCharacterInventoryCallback(List<Equippable> equippable) {
@@ -76,8 +77,10 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
             Log.v("imageLoader: ", "Not getting assigned");
         }
 
+
         inventoryItems.add(new DestinyInventoryItem(inventoryItem.getItemName(), inventoryItem.getItemDescription(),
-                inventoryItem.getItemTypeName(), inventoryItem.getTierTypeName(), inventoryItem.getIconPath(), imageLoader));
+                inventoryItem.getItemTypeName(), inventoryItem.getTierTypeName(), inventoryItem.getIconPath(),
+                imageLoader));
 
         count++;
 
@@ -110,8 +113,8 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
 
         Intent intent = getIntent();
 
-
         String CID = intent.getStringExtra("CID");
+        charId = CID;
         String MID = intent.getStringExtra("MID");
         String MT = intent.getStringExtra("MT");
 

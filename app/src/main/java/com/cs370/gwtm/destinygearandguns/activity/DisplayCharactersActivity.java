@@ -23,12 +23,12 @@ import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
 import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class DisplayCharactersActivity extends ActionBarActivity implements IPlayerCharacterListener {
 
     private PlayerCharacters pc;
     final static private String BUNGIE_URL = "https://www.bungie.net";
-    //private Intent inventoryIntent = new Intent(this, DisplayInventoryActivity.class);
 
     // Variables used to test how many characters are pulled at a time
     private String info[] = new String[6];
@@ -37,11 +37,14 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
     private int total = 0;
 
     private ArrayList<DestinyCharacterInfo> characterInfo = new ArrayList<>();
-    private CharacterClass characterClass = new CharacterClass();
     private DestinyCharacterInfo destinyCharacterInfo = new DestinyCharacterInfo();
 
     // Array to store character info for pulled characters so they can be passed to controller
-    private DestinyCharacters[] destinyCharacters= new DestinyCharacters[6];
+    private DestinyCharacters[] destinyCharacters= new DestinyCharacters[3];
+
+    // Variables used to pass correct characterId to the next activity
+    private String[] stringClass = new String[3];
+    private int classCount = 0;
 
     @Override
     public void playerMembershipCallback(DestinyMembership dm) {
@@ -52,10 +55,6 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
     @Override
     public void playerCharacterCallback(DestinyCharacters[] dc) {
-        //ArrayList<DestinyCharacters> Ids = new ArrayList<>();
-        //ArrayList<DestinyCharacterInfo> Ids = new ArrayList<>();
-        //setContentView(R.layout.activity_display_character_list);
-        //setContentView(R.layout.characters_activity);
 
         // Player's can have up to 3 characters.
         for(int i = 0; i < 3; i++) {
@@ -71,7 +70,7 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
         destinyCharacterInfo = dcInfo;
 
-        pc.pullCharacterClass(dcInfo.getClassHash());
+        pc.pullCharacterClass(dcInfo.getClassHash(), destinyCharacterInfo.getCharacterId());
 
         // String array to store character level and background path
         info[count] = Integer.toString(destinyCharacterInfo.getCharacterLevel());
@@ -83,9 +82,10 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         total++;
     }
 
-    public void playerCharacterClassCallback(CharacterClass classType) {
+    public void playerCharacterClassCallback(final CharacterClass classType) {
 
-        characterClass = classType;
+        // Store characterId in an array so it can be passed to onItemClick
+        stringClass[classCount] = classType.getCharacterId();
 
         ImageLoader imageLoader;
 
@@ -98,29 +98,28 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         // Keep track of how many times playerCharacterClassCallback has been called
         previousCount++;
 
-        checkAmountOfPulledCharacters(imageLoader);
+        // Checks amount of pulled characters
+        checkAmountOfPulledCharacters(imageLoader, classType);
 
         CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, characterInfo);
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
+
                 Intent inventoryIntent = new Intent(DisplayCharactersActivity.this, DisplayInventoryActivity.class);
 
-                // Pass info needed to pull correct character info
-                inventoryIntent.putExtra("CID", destinyCharacters[position].getCharacterId());
+                // Pass info needed to pull correct character inventory
+                inventoryIntent.putExtra("CID", stringClass[position]);
                 inventoryIntent.putExtra("MID", destinyCharacters[position].getMembershipId());
                 inventoryIntent.putExtra("MT", Integer.toString(destinyCharacters[position].getMembershipType()));
 
                 startActivity(inventoryIntent);
-
-                //Toast.makeText(MainActivity.this.
-                //this, "List View row Clicked at" + position, Toast.LENGTH_SHORT).show();
             }
         });
-
+        classCount++;
     }
 
     @Override
@@ -141,7 +140,6 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
         pc.pullMembership(serviceChecked, serviceMemberName);
 
-        //populateUsersList();
     }
 
     public void getInventory(View view) {
@@ -150,25 +148,12 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         startActivity(inventoryIntent);
     }
 
-
-/*    protected void onListItemClick(ListView l, View v, int position, long id) {
-
-        Intent inventoryIntent = new Intent(this, DisplayInventoryActivity.class);
-
-        // Pass info needed to pull correct character info
-        inventoryIntent.putExtra("CID", destinyCharacters[position].getCharacterId());
-        inventoryIntent.putExtra("MID", destinyCharacters[position].getMembershipId());
-        inventoryIntent.putExtra("MT", Integer.toString(destinyCharacters[position].getMembershipType()));
-
-        startActivity(inventoryIntent);
-    }*/
-
-
-    public void checkAmountOfPulledCharacters(ImageLoader imageLoader) {
+    public void checkAmountOfPulledCharacters(ImageLoader imageLoader, CharacterClass characterClass) {
         // Test to see if more than one character has been pulled before calling playerCharacterClassCallback
         if(total != previousCount) {
             // Test to see if all characters were pulled before calling playerCharacterClassCallback
             if(count == 6 && previousCount == 1) {
+                //Log.v("Character Class: ", characterClass.getCharacterClass());
                 characterInfo.add(new DestinyCharacterInfo(characterClass.getCharacterClass(),
                         Integer.parseInt(info[count - 6]),
                         destinyCharacterInfo.getEmblemPath(),
@@ -178,6 +163,7 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
             // Test to see if two characters were pulled before calling playerCharacterClassCallback
             else if(count == 6 && previousCount > 1) {
+                //Log.v("Character Class: ", characterClass.getCharacterClass());
                 characterInfo.add(new DestinyCharacterInfo(characterClass.getCharacterClass(),
                         Integer.parseInt(info[count - 4]),
                         destinyCharacterInfo.getEmblemPath(),
@@ -186,6 +172,7 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
             }
 
             else {
+                //Log.v("Character Class: ", characterClass.getCharacterClass());
                 characterInfo.add(new DestinyCharacterInfo(characterClass.getCharacterClass(),
                         Integer.parseInt(info[count - 4]),
                         destinyCharacterInfo.getEmblemPath(),
@@ -196,6 +183,7 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
         // If only one character was pulled since calling playerCharacterClassCallback
         else {
+            //Log.v("Character Class: ", characterClass.getCharacterClass());
             characterInfo.add(new DestinyCharacterInfo(characterClass.getCharacterClass(),
                     Integer.parseInt(info[count - 2]),
                     info[count - 1],
@@ -203,6 +191,8 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
                     imageLoader));
         }
     }
+
+
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -223,4 +213,6 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         return super.onOptionsItemSelected(item);
     }
 */
+
+
 }

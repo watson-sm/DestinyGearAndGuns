@@ -13,6 +13,7 @@ public class DestinyInventoryItem {
     String tierTypeName;
     String iconPath;
     ImageLoader imageLoader;
+    String characterId;
 
     public DestinyInventoryItem() {
         this.itemName = itemName;
@@ -21,6 +22,7 @@ public class DestinyInventoryItem {
         this.tierTypeName = tierTypeName;
         this.iconPath = iconPath;
         this.imageLoader = imageLoader;
+        this.characterId = characterId;
     }
 
     public DestinyInventoryItem(String itemName, String itemDescription, String itemTypeName, String tierTypeName, String iconPath,
