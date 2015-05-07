@@ -246,7 +246,9 @@ public class PlayerCharacters extends DisplayCharactersActivity {
         myQueue.add(jsonDestinyCharacterInfo);
     }
 
-    public void pullCharacterClass(long classHash) {
+
+    // get character class and character id from api call
+    public void pullCharacterClass(long classHash, final String characterId) {
         RequestQueue myQueue = VolleySingleton.getInstance( ctx.getApplicationContext() ).getRequestQueue();
         String hash = Long.toString(classHash);
 
@@ -260,8 +262,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            CharacterClass characterClass = new CharacterClass();
-                            //Log.v("We made: ", "it");
+                            CharacterClass characterClass = new CharacterClass();;
 
                             // This is pulling the character class information
                             String jsonCharacterClass = response.getJSONObject("Response").getJSONObject("data").toString();
@@ -270,9 +271,9 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                             String class_val = parseCharacterInfoString(class_tag, jsonCharacterClass);
                             characterClass.setCharacterClass(class_val);
 
-                            iPCL.playerCharacterClassCallback(characterClass);
-                            //Log.v("Class: ", class_val);
+                            characterClass.setCharacterId(characterId);
 
+                            iPCL.playerCharacterClassCallback(characterClass);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
