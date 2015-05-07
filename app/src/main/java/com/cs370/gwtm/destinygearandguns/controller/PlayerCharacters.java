@@ -30,7 +30,6 @@ public class PlayerCharacters extends DisplayCharactersActivity {
 
     private Context ctx;
     private IPlayerCharacterListener iPCL;
-    //final String BUNGIE_URL = "https://www.bungie.net";
 
     public PlayerCharacters(IPlayerCharacterListener playerCharacterListener) {
         iPCL = playerCharacterListener;
@@ -262,7 +261,7 @@ public class PlayerCharacters extends DisplayCharactersActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            CharacterClass characterClass = new CharacterClass();;
+                            CharacterClass characterClass = new CharacterClass();
 
                             // This is pulling the character class information
                             String jsonCharacterClass = response.getJSONObject("Response").getJSONObject("data").toString();

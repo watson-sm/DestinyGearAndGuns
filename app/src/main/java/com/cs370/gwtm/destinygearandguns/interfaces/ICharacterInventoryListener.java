@@ -3,7 +3,6 @@ package com.cs370.gwtm.destinygearandguns.interfaces;
 import com.cs370.gwtm.destinygearandguns.model.DestinyInventoryItem;
 import com.cs370.gwtm.destinygearandguns.model.Equippable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +10,6 @@ import java.util.List;
  * Listener for the inventory call
  */
 public interface ICharacterInventoryListener {
-    public void playerCharacterInventoryCallback(List<Equippable> equippable);
-    public void playerItemCallback(DestinyInventoryItem item);
+    void playerCharacterInventoryCallback(List<Equippable> equippable);
+    void playerItemCallback(DestinyInventoryItem item);
 }

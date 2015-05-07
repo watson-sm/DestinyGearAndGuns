@@ -22,18 +22,16 @@ import java.util.List;
 public class DisplayInventoryActivity extends ActionBarActivity implements ICharacterInventoryListener {
 
     private CharacterInventory CI;
-    public ArrayList<DestinyInventoryItem> inventoryItems = new ArrayList();
+    public ArrayList<DestinyInventoryItem> inventoryItems = new ArrayList<>();
     private int equippableSize = 0;
     private int count = 0;
-    private String charId;
+    //private String charId;
 
     @Override
     public void playerCharacterInventoryCallback(List<Equippable> equippable) {
         equippableSize = equippable.size();
         // Inventory
-
-        // TODO NOTE THIS IS A LITTLE BACKWARDS DUE TO JSON
-        // So...each "items" array only holds 1 array element
+        // Each "items" array only holds 1 array element
         /*
          * Heirarchy
          *  - Equippable[0 : size]
@@ -50,7 +48,6 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
         // Bucket has seems to have been populated by the gson
         //Log.v("Bucket Hash: ", String.valueOf( equippable.get(0).getBucketHash() ) );
 
-        // Trying to figure out how to check the nested arrays
         // This currently only works with a value of 0, anything > 0 gives a throws
         // an array out of bounds exception
         //Log.v("Item Hash: ", String.valueOf(equippable.get(0).items.get(0).getItemHash()));
@@ -114,35 +111,11 @@ public class DisplayInventoryActivity extends ActionBarActivity implements IChar
         Intent intent = getIntent();
 
         String CID = intent.getStringExtra("CID");
-        charId = CID;
+        //charId = CID;
         String MID = intent.getStringExtra("MID");
         String MT = intent.getStringExtra("MT");
 
         CI.getInventory(MID, CID, MT);
 
     }
-
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_display_inventory, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
 }

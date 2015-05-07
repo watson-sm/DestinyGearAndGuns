@@ -10,8 +10,8 @@ import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
  * Listener
  */
 public interface IPlayerCharacterListener {
-    public void playerMembershipCallback(DestinyMembership dm);
-    public void playerCharacterCallback(DestinyCharacters[] dc);
-    public void playerCharacterInfoCallback(DestinyCharacterInfo dcInfo);
-    public void playerCharacterClassCallback(CharacterClass characterClass);
+    void playerMembershipCallback(DestinyMembership dm);
+    void playerCharacterCallback(DestinyCharacters[] dc);
+    void playerCharacterInfoCallback(DestinyCharacterInfo dcInfo);
+    void playerCharacterClassCallback(CharacterClass characterClass);
 }

@@ -20,43 +20,19 @@ public class DestinyCharacterInfo {
     int classType;
     String emblemPath;
     String backgroundPath;
-
-
-
     String characterClass;
-    //NetworkImageView backgroundImg;
     ImageLoader imageLoader;
 
     public DestinyCharacterInfo() {
-        //membershipId = "";
-        //membershipType = 0;
         characterClass = "";
         characterId = "";
         characterLevel = 0;
         raceHash = 0;
-        //genderHash = 0;
         classHash = 0;
-        /*emblemHash = 0;
-        genderType = 0;
-        classType = 0;*/
         emblemPath = "";
         backgroundPath = "";
     }
-/*
-    public NetworkImageView getBackgroundImg() {
-        return backgroundImg;
-    }
-*/
-/*
-    public void setBackgroundImg(NetworkImageView backgroundImg) {
-        this.backgroundImg = backgroundImg;
-    }
-*/
-/*
-    public long getEmblemHash() {
-        return emblemHash;
-    }
-*/
+
     public DestinyCharacterInfo(String characterClass, int characterLevel, String emblemPath, String
                                 backgroundPath, ImageLoader imageLoader) {
         this.characterClass = characterClass;
@@ -70,26 +46,14 @@ public class DestinyCharacterInfo {
         return characterClass;
     }
 
-    public void setCharacterClass(String characterClass) {
-        this.characterClass = characterClass;
-    }
-
     public void setEmblemHash(long emblemHash) {
         this.emblemHash = emblemHash;
     }
-/*
-    public String getMembershipId() {
-        return membershipId;
-    }
-*/
+
     public void setMembershipId(String membershipId) {
         this.membershipId = membershipId;
     }
-/*
-    public int getMembershipType() {
-        return membershipType;
-    }
-*/
+
     public void setMembershipType(int membershipType) {
         this.membershipType = membershipType;
     }
@@ -110,18 +74,10 @@ public class DestinyCharacterInfo {
         this.characterLevel = characterLevel;
     }
 
-    public long getRaceHash() {
-        return raceHash;
-    }
-
     public void setRaceHash(long raceHash) {
         this.raceHash = raceHash;
     }
-/*
-    public long getGenderHash() {
-        return genderHash;
-    }
-*/
+
     public void setGenderHash(long genderHash) {
         this.genderHash = genderHash;
     }
@@ -133,19 +89,11 @@ public class DestinyCharacterInfo {
     public void setClassHash(long classHash) {
         this.classHash = classHash;
     }
-/*
-    public int getGenderType() {
-        return genderType;
-    }
-*/
+
     public void setGenderType(int genderType) {
         this.genderType = genderType;
     }
-/*
-    public int getClassType() {
-        return classType;
-    }
-*/
+
     public void setClassType(int classType) {
         this.classType = classType;
     }
@@ -167,8 +115,4 @@ public class DestinyCharacterInfo {
     }
 
     public ImageLoader getImageLoader() { return imageLoader; }
-/*
-    public void setImageLoader(ImageLoader imageLoader) { this.imageLoader = imageLoader; }
-*/
-
 }

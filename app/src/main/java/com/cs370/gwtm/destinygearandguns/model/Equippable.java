@@ -5,6 +5,9 @@ import java.util.List;
 /**
  * Created by Kiladre on 4/25/15.
  * Attempting GSONs auto populate from JSON
+ *
+ * Ignoring warnings in this class as they are for functions and variables not being used
+ * however the model is being set through GSON.
  */
 public class Equippable {
     public long getBucketHash() {

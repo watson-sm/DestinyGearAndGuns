@@ -2,8 +2,6 @@ package com.cs370.gwtm.destinygearandguns.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.cs370.gwtm.destinygearandguns.R;
 
@@ -16,7 +14,7 @@ public class InventoryActivity extends ActionBarActivity {
         setContentView(R.layout.activity_inventory);
     }
 
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -38,4 +36,5 @@ public class InventoryActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+*/
 }

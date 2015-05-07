@@ -52,7 +52,6 @@ public class CharacterInventory extends DisplayInventoryActivity {
          * /{membershipType}/Account/{destinyMembershipId}/Character/{characterId}/Inventory/
          */
 
-        // TODO update inventoryURL so it's not hard coded.
         // Change values depending on which character the user selected.
         String inventoryURL = "https://www.bungie.net/platform/destiny/"
                             + MT + "/Account/" + MID + "/Character/" + CID + "/Inventory/";

@@ -26,6 +26,8 @@ public class DestinyMembership {
         return membershipType;
     }
 
+/*
+
     public String getDisplayName() {
         return displayName;
     }
@@ -49,7 +51,7 @@ public class DestinyMembership {
     public void setDisplayName(String acctName) {
         displayName = acctName;
     }
-
+*/
     @Override
     public String toString() {
         return String.format(" iconPath=%s \n membershipType=%d \n membershipId=%s \n displayName=%s",

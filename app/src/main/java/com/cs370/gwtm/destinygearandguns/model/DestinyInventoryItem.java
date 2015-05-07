@@ -4,6 +4,7 @@ import com.android.volley.toolbox.ImageLoader;
 
 /**
  * Created by josh on 5/3/15.
+ * Destiny Inventory Items
  */
 
 public class DestinyInventoryItem {
@@ -13,16 +14,8 @@ public class DestinyInventoryItem {
     String tierTypeName;
     String iconPath;
     ImageLoader imageLoader;
-    String characterId;
 
     public DestinyInventoryItem() {
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.itemTypeName = itemTypeName;
-        this.tierTypeName = tierTypeName;
-        this.iconPath = iconPath;
-        this.imageLoader = imageLoader;
-        this.characterId = characterId;
     }
 
     public DestinyInventoryItem(String itemName, String itemDescription, String itemTypeName, String tierTypeName, String iconPath,
@@ -56,8 +49,4 @@ public class DestinyInventoryItem {
     public void setIconPath(String iconPath) { this.iconPath = iconPath; }
 
     public ImageLoader getImageLoader() { return imageLoader; }
-
-    public void setImageLoader(ImageLoader imageLoader) { this.imageLoader = imageLoader; }
-
-
 }
