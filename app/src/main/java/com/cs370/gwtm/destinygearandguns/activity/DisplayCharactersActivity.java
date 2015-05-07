@@ -1,6 +1,5 @@
 package com.cs370.gwtm.destinygearandguns.activity;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,10 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.cs370.gwtm.destinygearandguns.R;
 import com.cs370.gwtm.destinygearandguns.controller.PlayerCharacters;
 import com.cs370.gwtm.destinygearandguns.interfaces.CharacterArrayAdapter;
@@ -23,12 +20,10 @@ import com.cs370.gwtm.destinygearandguns.model.DestinyMembership;
 import com.cs370.gwtm.destinygearandguns.utility.VolleySingleton;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class DisplayCharactersActivity extends ActionBarActivity implements IPlayerCharacterListener {
 
     private PlayerCharacters pc;
-    final static private String BUNGIE_URL = "https://www.bungie.net";
 
     // Variables used to test how many characters are pulled at a time
     private String info[] = new String[6];
@@ -142,12 +137,6 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
     }
 
-    public void getInventory(View view) {
-        Intent inventoryIntent = new Intent(this, DisplayInventoryActivity.class);
-
-        startActivity(inventoryIntent);
-    }
-
     public void checkAmountOfPulledCharacters(ImageLoader imageLoader, CharacterClass characterClass) {
         // Test to see if more than one character has been pulled before calling playerCharacterClassCallback
         if(total != previousCount) {
@@ -191,28 +180,4 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
                     imageLoader));
         }
     }
-
-
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_display_character_list, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-*/
-
-
 }
