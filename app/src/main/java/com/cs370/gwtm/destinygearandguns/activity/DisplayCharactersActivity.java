@@ -1,11 +1,14 @@
 package com.cs370.gwtm.destinygearandguns.activity;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -23,20 +26,22 @@ import java.util.ArrayList;
 
 public class DisplayCharactersActivity extends ActionBarActivity implements IPlayerCharacterListener {
 
-    //private TextView textView = (TextView) findViewById(R.id.);
     private PlayerCharacters pc;
     final static private String BUNGIE_URL = "https://www.bungie.net";
+    //private Intent inventoryIntent = new Intent(this, DisplayInventoryActivity.class);
 
+    // Variables used to test how many characters are pulled at a time
     private String info[] = new String[6];
     private int count = 0;
     private int previousCount = 0;
     private int total = 0;
 
-    //TODO look into making these private
-
     private ArrayList<DestinyCharacterInfo> characterInfo = new ArrayList<>();
-    private CharacterClass publicCharacterClass = new CharacterClass();
-    private DestinyCharacterInfo publicDestinyCharacacterInfo = new DestinyCharacterInfo();
+    private CharacterClass characterClass = new CharacterClass();
+    private DestinyCharacterInfo destinyCharacterInfo = new DestinyCharacterInfo();
+
+    // Array to store character info for pulled characters so they can be passed to controller
+    private DestinyCharacters[] destinyCharacters= new DestinyCharacters[6];
 
     @Override
     public void playerMembershipCallback(DestinyMembership dm) {
@@ -48,12 +53,13 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
     @Override
     public void playerCharacterCallback(DestinyCharacters[] dc) {
         //ArrayList<DestinyCharacters> Ids = new ArrayList<>();
-        ArrayList<DestinyCharacterInfo> Ids = new ArrayList<>();
-        setContentView(R.layout.activity_display_character_list);
+        //ArrayList<DestinyCharacterInfo> Ids = new ArrayList<>();
+        //setContentView(R.layout.activity_display_character_list);
         //setContentView(R.layout.characters_activity);
 
         // Player's can have up to 3 characters.
         for(int i = 0; i < 3; i++) {
+            destinyCharacters[i] = dc[i];
             pc.pullCharacterInfo(dc[i].getMembershipType(), dc[i].getMembershipId(), dc[i].getCharacterId());
 
         }
@@ -62,28 +68,24 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
 
     @Override
     public void playerCharacterInfoCallback(DestinyCharacterInfo dcInfo) {
-        // TODO figure out how to use emblem and background path to load images from url
-        // and put in character level.
 
-        //count = 0;
-
-        publicDestinyCharacacterInfo = dcInfo;
+        destinyCharacterInfo = dcInfo;
 
         pc.pullCharacterClass(dcInfo.getClassHash());
 
         // String array to store character level and background path
-        info[count] = Integer.toString(publicDestinyCharacacterInfo.getCharacterLevel());
-        count = count+1;
-        info[count] = publicDestinyCharacacterInfo.getBackgroundPath();
-        count = count+1;
+        info[count] = Integer.toString(destinyCharacterInfo.getCharacterLevel());
+        count++;
+        info[count] = destinyCharacterInfo.getBackgroundPath();
+        count++;
 
         //Total number of characters pulled
-        total = total+1;
+        total++;
     }
 
     public void playerCharacterClassCallback(CharacterClass classType) {
 
-        publicCharacterClass = classType;
+        characterClass = classType;
 
         ImageLoader imageLoader;
 
@@ -94,67 +96,38 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         }
 
         // Keep track of how many times playerCharacterClassCallback has been called
-        previousCount = previousCount + 1;
+        previousCount++;
 
-        Log.v("Count: ", Integer.toString(count));
-        // TODO put in a method (aka a function)
-        // Test to see if more than one character has been pulled before calling playerCharacterClassCallback
-        if(total != previousCount) {
-            // Test to see if all characters were pulled before calling playerCharacterClassCallback
-            if(count == 6 && previousCount == 1) {
-                characterInfo.add(new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
-                        Integer.parseInt(info[count - 6]),
-                        publicDestinyCharacacterInfo.getEmblemPath(),
-                        info[count-5],
-                        imageLoader));
-                }
-
-            // Test to see if two characters were pulled before calling playerCharacterClassCallback
-            else if(count == 6 && previousCount > 1) {
-                Log.v("Character Level if: ", info[count - 4]);
-                Log.v("Background Path if: ", info[count - 3]);
-                characterInfo.add(new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
-                        Integer.parseInt(info[count - 4]),
-                        publicDestinyCharacacterInfo.getEmblemPath(),
-                        info[count-3],
-                        imageLoader));
-            }
-
-            else {
-                characterInfo.add(new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
-                        Integer.parseInt(info[count - 4]),
-                        publicDestinyCharacacterInfo.getEmblemPath(),
-                        info[count-3],
-                        imageLoader));
-                }
-            }
-
-        // If only one character was pulled since calling playerCharacterClassCallback
-        else {
-            Log.v("Character Level: ", info[count - 2]);
-            Log.v("Background Path: ", info[count - 1]);
-            characterInfo.add(new DestinyCharacterInfo(publicCharacterClass.getCharacterClass(),
-                    Integer.parseInt(info[count - 2]),
-                    info[count - 1],
-                    publicDestinyCharacacterInfo.getBackgroundPath(),
-                    imageLoader));
-        }
+        checkAmountOfPulledCharacters(imageLoader);
 
         CharacterArrayAdapter adapter = new CharacterArrayAdapter(this, characterInfo);
-        ListView listView = (ListView) findViewById(R.id.characterList);
+        ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Intent inventoryIntent = new Intent(DisplayCharactersActivity.this, DisplayInventoryActivity.class);
+
+                // Pass info needed to pull correct character info
+                inventoryIntent.putExtra("CID", destinyCharacters[position].getCharacterId());
+                inventoryIntent.putExtra("MID", destinyCharacters[position].getMembershipId());
+                inventoryIntent.putExtra("MT", Integer.toString(destinyCharacters[position].getMembershipType()));
+
+                startActivity(inventoryIntent);
+
+                //Toast.makeText(MainActivity.this.
+                //this, "List View row Clicked at" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_display_message);
         setContentView(R.layout.activity_display_character_list);
 
-        //textView = new TextView(this);
-
-        //PlayerCharacters pc = new PlayerCharacters(this);
         pc = new PlayerCharacters(this);
 
         // Get the message from intent
@@ -175,6 +148,60 @@ public class DisplayCharactersActivity extends ActionBarActivity implements IPla
         Intent inventoryIntent = new Intent(this, DisplayInventoryActivity.class);
 
         startActivity(inventoryIntent);
+    }
+
+
+/*    protected void onListItemClick(ListView l, View v, int position, long id) {
+
+        Intent inventoryIntent = new Intent(this, DisplayInventoryActivity.class);
+
+        // Pass info needed to pull correct character info
+        inventoryIntent.putExtra("CID", destinyCharacters[position].getCharacterId());
+        inventoryIntent.putExtra("MID", destinyCharacters[position].getMembershipId());
+        inventoryIntent.putExtra("MT", Integer.toString(destinyCharacters[position].getMembershipType()));
+
+        startActivity(inventoryIntent);
+    }*/
+
+
+    public void checkAmountOfPulledCharacters(ImageLoader imageLoader) {
+        // Test to see if more than one character has been pulled before calling playerCharacterClassCallback
+        if(total != previousCount) {
+            // Test to see if all characters were pulled before calling playerCharacterClassCallback
+            if(count == 6 && previousCount == 1) {
+                characterInfo.add(new DestinyCharacterInfo(characterClass.getCharacterClass(),
+                        Integer.parseInt(info[count - 6]),
+                        destinyCharacterInfo.getEmblemPath(),
+                        info[count-5],
+                        imageLoader));
+            }
+
+            // Test to see if two characters were pulled before calling playerCharacterClassCallback
+            else if(count == 6 && previousCount > 1) {
+                characterInfo.add(new DestinyCharacterInfo(characterClass.getCharacterClass(),
+                        Integer.parseInt(info[count - 4]),
+                        destinyCharacterInfo.getEmblemPath(),
+                        info[count-3],
+                        imageLoader));
+            }
+
+            else {
+                characterInfo.add(new DestinyCharacterInfo(characterClass.getCharacterClass(),
+                        Integer.parseInt(info[count - 4]),
+                        destinyCharacterInfo.getEmblemPath(),
+                        info[count-3],
+                        imageLoader));
+            }
+        }
+
+        // If only one character was pulled since calling playerCharacterClassCallback
+        else {
+            characterInfo.add(new DestinyCharacterInfo(characterClass.getCharacterClass(),
+                    Integer.parseInt(info[count - 2]),
+                    info[count - 1],
+                    destinyCharacterInfo.getBackgroundPath(),
+                    imageLoader));
+        }
     }
 /*
     @Override

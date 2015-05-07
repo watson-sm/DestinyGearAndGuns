@@ -37,9 +37,7 @@
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:layout_height="55dp"
-        android:layout_width="fill_parent"
-        android:onClick="getInventory"
-        android:clickable="true" />
+        android:layout_width="fill_parent" />
 <!--
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/networkImageView"
@@ -66,9 +64,7 @@
         android:textSize="25sp"
         android:paddingLeft="5dp"
         android:layout_toEndOf="@id/level"
-        android:layout_marginBottom="2dp"
-        android:onClick="getInventory"
-        android:clickable="true" />
+        android:layout_marginBottom="2dp" />
 
     <!-- <TextView
         android:layout_width="30dp"

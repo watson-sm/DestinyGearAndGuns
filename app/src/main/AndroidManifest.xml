@@ -12,7 +12,9 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,23 +24,27 @@
         <activity
             android:name=".activity.DisplayCharactersActivity"
             android:label="@string/title_activity_display_message"
-            android:parentActivityName=".activity.MainActivity" >
+            android:parentActivityName=".activity.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.MainActivity" />
         </activity>
         <activity
             android:name=".activity.DisplayInventoryActivity"
-            android:label="@string/title_activity_display_characters_inventory" >
             android:label="@string/title_activity_display_inventory"
-            android:parentActivityName=".activity.DisplayCharactersActivity" >
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.DisplayCharactersActivity" />
         </activity>
         <activity
             android:name=".activity.InventoryActivity"
-            android:label="@string/title_activity_inventory" >
+            android:label="@string/title_activity_inventory"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
